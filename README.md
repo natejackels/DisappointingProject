@@ -1,0 +1,3 @@
+# INSERT TITLE HERE - A Disappointing Project
+>An event-driven application that will assist those less familiar with computers experience a smoother and easy to learn environment. The user will be able to ask/type questions such as ‘what they I do’, as well as other commands that we will be adding such as ‘play music’ or ‘check email’. This application will simplify the user’s experience by helping them with some of the problems that inexperienced commonly experience.
+To further simplify the experience, the application will accept input through a microphone, an application input window, or various keyboard shortcuts, and then display the response back on the screen as well as read it back to the user.
