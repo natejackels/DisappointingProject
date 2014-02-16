@@ -40,8 +40,38 @@ public class Control.java {
 		@author Robin McNally
 		@param gPack Takes a robot packet and decides what class to send it to
 	*/
+	/*
+		TODO -> Application invalid
+		TODO -> Application commands invalid
+		TODO -> Application open fail
+		TODO -> Display to user
+		TODO -> Get Folder location
+		TODO -> Bad Get Value
+	*/
 	public void sendPacket(RobotPacket rPack){
-		
+		switch (rPack.getApplication()) {
+			case "Robot":
+				switch (rPack.getEvent()){
+					case "BadPacket":
+						if (rPack.getInfo() == null){
+
+						} else {
+							
+						}
+					break;
+					case "Display":
+					break;
+					case "NeedLocation":
+					break;
+					case "BadGetValue":
+					break;
+					default:
+					break;
+				}
+				break;
+			default:
+			break;
+		}
 	}
 
 	/**
