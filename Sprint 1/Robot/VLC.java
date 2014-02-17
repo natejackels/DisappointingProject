@@ -1,5 +1,12 @@
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
+
+/**
+ * Class: VLC
+ * @author Nathan Jackels
+ * Description: The class that implements controls for VLC 
+ */
 
 public class VLC extends Application{
 	private Robot robot; //Used to throw information needed things.
@@ -8,16 +15,31 @@ public class VLC extends Application{
 	private Mouse mouse;
 	private String vlcFolder;
 
-	public VLC(Robot e, Keyboard k, Mouse m) {
+	/**
+	 * Method: VLC(Robot e, Keyboard k, Mouse m)
+	 * @author Nathan Jackels
+	 * @param e The reference to the robot class
+	 * @param k The reference to the keyboard class
+	 * @param m The reference to the mouse class
+	 * Description: The constructor for VLC
+	 */
+	public VLC(Robot r, Keyboard k, Mouse m) {
 		super("VLC", 1);
-		this.robot = e;
+		this.robot = r;
 		this.keyboard = k;
 		this.mouse = m;
 		// TODO Auto-generated constructor stub
 	}
 	
+	/**
+	 * Method: interpret(RobotPacket e)
+	 * @author Nathan Jackels
+	 * @param e The packet that will be interpreted by VLC
+	 * @return The result of interpreting e [Usually a Display Command]
+	 */
 	@Override
 	public RobotPacket interpret(RobotPacket e){
+		//TODO Check Application
 		return vlc(e.getEvent(), e.getInfo());
 	}
 
@@ -38,6 +60,7 @@ public class VLC extends Application{
 			String[] vlcIs = {"VLC is a music and video player.", "Unlike other programs, VLC can play nearly any song or video you have on your computer.", "It can also play DVDs and CDs that you put in your computer."};
 			return new RobotPacket("Robot", "Display", vlcIs);
 		case("Play"):
+			//TODO Full implementation
 			if(vlc != null) this.keyboard.mediaPlayButton();
 			return null;
 		case("Pause"):
@@ -65,7 +88,11 @@ public class VLC extends Application{
 			return null;
 		case("Close"):
 			if(vlc != null) vlc.destroy();
-			//TODO Search for process and kill if not initialized through robot.
+			//Search for process and kill if not initialized through robot.
+			try {
+				Process kill = Runtime.getRuntime().exec("Taskkill /F /IM vlc.exe");	//Kills all VLC processes TODO refine
+			} catch (IOException e1) {
+			}
 			return null;
 		case("Open"):
 			if(vlc == null){
