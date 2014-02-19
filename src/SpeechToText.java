@@ -1,8 +1,8 @@
 
 public class SpeechToText {
-	public Wrapper parent;
+	public Controller parent;
 	
-	public SpeechToText(Wrapper w) {
+	public SpeechToText(Controller w) {
 		parent = w;
 	}
 }

@@ -1,8 +1,12 @@
 
 public class TextToSpeech {
-	public Wrapper parent;
+	public Controller parent;
 	
-	public TextToSpeech(Wrapper w) {
+	public TextToSpeech(Controller w) {
 		parent = w;
 	}
+	
+	//public send(TextToSpeechPacket packet) {
+		
+	//}
 }

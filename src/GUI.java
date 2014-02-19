@@ -1,7 +1,7 @@
 
 public class GUI {
-	public Wrapper parent;
-	public GUI(Wrapper w) {
+	public Controller parent;
+	public GUI(Controller w) {
 		parent = w;
 	}
 }
