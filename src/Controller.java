@@ -34,7 +34,7 @@ public class Controller {
 	 *	@author Robin McNally
 	 *	@param gPack Takes a gui packet and decides what class to send it to
 	 */
-	public void sendPacket(guiPacket gPack){
+	public void sendPacket(GUIPacket gPack){
 		//Take apart packet
 		//Derive meaning
 		//Forward to one of the other three
@@ -84,7 +84,7 @@ public class Controller {
 	 *	@author Robin McNally
 	 *	@param gPack Takes a tts packet and decides what class to send it to
 	 */
-	public void sendPacket(ttsPacket tsPack){
+	public void sendPacket(TextToSpeechPacket tsPack){
 		//Not much will happen here
 	}
 
@@ -93,7 +93,7 @@ public class Controller {
 	 *	@author Robin McNally
 	 *	@param gPack Takes a stt packet and decides what class to send it to
 	 */
-	public void sendPacket(sttPacket stPack){
+	public void sendPacket(SpeechToTextPacket stPack){
 		//Pull apart packet
 		//Send string to Funnel
 		//Send result to Robot/whatever
