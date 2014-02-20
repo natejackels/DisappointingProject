@@ -1,4 +1,7 @@
 import com.sun.speech.freetts.*;
+/*If the above line is giving you an error, that is because
+ * you need to add "lib/freetts.jar" to your classpath
+ */
 public class TextToSpeech {
 	public Controller parent;
 	private Voice voice;
