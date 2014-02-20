@@ -1,12 +1,35 @@
-
+import com.sun.speech.freetts.*;
 public class TextToSpeech {
 	public Controller parent;
+	private Voice voice;
 	
 	public TextToSpeech(Controller w) {
 		parent = w;
+		//Load up the freeTTS voice manager
+		VoiceManager voiceManager = VoiceManager.getInstance();
+		
+		Voice[] voices = voiceManager.getVoices();
+
+		//I like kevin16, so we will use that for right now
+		for (int i = 0; i < voices.length; i++) {
+			if (voices[i].getName().equals("kevin16")) {
+				voice = voices[i];
+				
+				//Preapare the voice
+				voice.allocate();
+			}
+		}
+		
+		say("HUG");
 	}
 	
-	//public send(TextToSpeechPacket packet) {
-		
-	//}
+	public void send(TextToSpeechPacket packet) {
+		//Say the message
+		say(packet.getMessage());
+	}
+	
+	public void say(String s) {
+		voice.speak(s);
+	}
+	
 }
