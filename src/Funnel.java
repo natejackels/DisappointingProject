@@ -8,7 +8,7 @@
 public class Funnel {
 
 
-	public static boolean FunnelString(String toInterpret){
+	public static boolean decode(String toInterpret){
 		
 	}
 }

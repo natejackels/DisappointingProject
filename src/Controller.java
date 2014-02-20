@@ -15,7 +15,7 @@ public class Controller {
 	public TextToSpeech tts;
 	public SpeechToText stt;
 	public GUI gui;
-	private String lastProgram;
+	public Robot robot;
 	public static void main(String[] args) {
 		//Create the wrapper (Main program) object
 		Controller controller = new Controller();
@@ -28,6 +28,7 @@ public class Controller {
 		stt = new SpeechToText(this);
 		stt.startRecording();
 		gui = new GUI(this);
+
 	}
 
 	/**
@@ -35,10 +36,30 @@ public class Controller {
 	 *	@author Robin McNally
 	 *	@param gPack Takes a gui packet and decides what class to send it to
 	 */
-	public void sendPacket(GUIPacket gPack){
-		//Take apart packet
-		//Derive meaning
-		//Forward to one of the other three
+	public GUIPacket sendPacket(GUIPacket gPack){
+		String toDecode = gPack.getMessage();
+
+		//Temporary working code
+		switch (toDecode){
+			case "open vlc":
+				RobotPacket openCmd = new RobotPacket("VLC", "Open", null);
+				robot.sendPacket(openCmd);
+			break;
+			case "close vlc":
+				RobotPacket closeCmd = new RobotPacket("VLC", "Close", null);
+				robot.sendPacket(closeCmd);
+			break;
+			case "play":
+				RobotPacket playCmd = new RobotPacket("VLC", "Play", null);
+				robot.sendPacket(playCmd);
+			break;
+			default:
+				GUIPacket err = new GUIPacket();
+				
+				//This may not work yet
+				//gui.sendPacket(err);
+			break;
+		}
 	}
 
 	/**
@@ -54,30 +75,9 @@ public class Controller {
 		TODO -> Get Folder location
 		TODO -> Bad Get Value
 	*/
-	public void sendPacket(RobotPacket rPack){
-		switch (rPack.getApplication()) {
-			case "Robot":
-				switch (rPack.getEvent()){
-					case "BadPacket":
-						if (rPack.getInfo() == null){
-
-						} else {
-							
-						}
-					break;
-					case "Display":
-					break;
-					case "NeedLocation":
-					break;
-					case "BadGetValue":
-					break;
-					default:
-					break;
-				}
-				break;
-			default:
-			break;
-		}
+	public RobotPacket sendPacket(RobotPacket rPack){
+		//Not much happens here
+		//Error handling will pick up after demo
 	}
 
 	/**
@@ -95,8 +95,26 @@ public class Controller {
 	 *	@param gPack Takes a stt packet and decides what class to send it to
 	 */
 	public void sendPacket(STTPacket stPack){
-		//Pull apart packet
-		//Send string to Funnel
-		//Send result to Robot/whatever
+		String toDecode = gPack.getMessage();
+		switch (toDecode){
+			case "open vlc":
+				RobotPacket openCmd = new RobotPacket("VLC", "Open", null);
+				robot.sendPacket(openCmd);
+			break;
+			case "close vlc":
+				RobotPacket closeCmd = new RobotPacket("VLC", "Close", null);
+				robot.sendPacket(closeCmd);
+			break;
+			case "play":
+				RobotPacket playCmd = new RobotPacket("VLC", "Play", null);
+				robot.sendPacket(playCmd);
+			break;
+			default:
+				STTPacket err = new STTPacket();
+				
+				//This may not work yet
+				//gui.sendPacket(err);
+			break;
+		}
 	}
 }
