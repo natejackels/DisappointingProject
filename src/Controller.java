@@ -26,6 +26,7 @@ public class Controller {
 	public void initialize() {
 		tts = new TextToSpeech(this);
 		stt = new SpeechToText(this);
+		stt.startRecording();
 		gui = new GUI(this);
 	}
 
@@ -93,7 +94,7 @@ public class Controller {
 	 *	@author Robin McNally
 	 *	@param gPack Takes a stt packet and decides what class to send it to
 	 */
-	public void sendPacket(SpeechToTextPacket stPack){
+	public void sendPacket(STTPacket stPack){
 		//Pull apart packet
 		//Send string to Funnel
 		//Send result to Robot/whatever
