@@ -17,21 +17,19 @@ public class Funnel {
 	*/
 	public static RobotPacket decodeVLC(String toInterpret){
 		String tempString = toInterpret;
-		switch (toDecode){
+		switch (tempString){
 			case "open vlc":
 				RobotPacket openCmd = new RobotPacket("VLC", "Open", null);
 				return openCmd;
-			break;
 			case "close vlc":
 				RobotPacket closeCmd = new RobotPacket("VLC", "Close", null);
 				return closeCmd;
-			break;
 			case "play":
 				RobotPacket playCmd = new RobotPacket("VLC", "Play", null);
 				return playCmd;
-			break;
-			default:	
+			default:
 			break;
 		}
+		return new RobotPacket("N/A", null, null);
 	}
 }

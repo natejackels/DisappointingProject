@@ -10,11 +10,11 @@
  * @author njfisher
  */
 public class GUI extends javax.swing.JFrame {
-    public Wrapper parent;
+    public Controller parent;
     String commandToSend = "";  //String to be passed to control after typed in
     boolean recording = false;  //used for toggle button
     
-    public GUI(Wrapper W) {
+    public GUI(Controller W) {
         parent = W;
         initComponents();
         this.setVisible(true);
