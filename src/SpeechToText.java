@@ -1,7 +1,11 @@
 
 /*
  * Remember to add
- * "lib/sphinx4.jar" to classpath
+ * "lib/sphinx4.jar"
+ * "lib/jsapi-1.0-base.jar"
+ * "lib/WSJ_8gau_13dCep_8kHz_31mel_200Hz_3500Hz.jar"
+ * "lib/WSJ_8gau_13dCep_16kHz_40mel_130Hz_6800Hz.jar"
+ *  to classpath
  */
 import edu.cmu.sphinx.decoder.ResultListener;
 import edu.cmu.sphinx.frontend.util.Microphone;
