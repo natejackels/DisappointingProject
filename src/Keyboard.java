@@ -13,14 +13,4 @@ public class Keyboard {
 		}
 	}
 
-	public void mediaPlayButton() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	public void mediaPauseButton() {
-		// TODO Auto-generated method stub
-		
-	}
-
 }

@@ -1,7 +1,3 @@
-import java.io.File;
-import java.io.IOException;
-import java.util.ArrayList;
-
 /**
  *	Class: Robot
  *	@author Nathan Jackels
@@ -10,10 +6,7 @@ import java.util.ArrayList;
 public class Robot {
 	private Application[] apps = new Application[0];
 	private Keyboard keyboard = null;
-	private Mouse mouse = null;
-	private Control control = null;
-	private RobotPacket last = null;
-	private boolean nextIsUpdate = false;
+	private Controller control = null;
 	
 	/**
 	 *	Method: Robot(Control control)
@@ -22,12 +15,13 @@ public class Robot {
 	 *	@see TSP/Control/Robot_Packet_Design
 	 *  Description: The constructor for the class
 	 */
-	public Robot(Control control){
+	public Robot(Controller control){
 		//TODO Create Programs and Classes
 		this.control = control;
 		this.keyboard = new Keyboard();
-		this.mouse =new Mouse();
-		
+		apps = new Application[2];
+		apps[0] = new VLC(keyboard);
+		apps[1] = new Computer(keyboard);
 	}
 	
 	/**
@@ -37,7 +31,7 @@ public class Robot {
 	 * Description: A method for getting information from robot without exiting the application
 	 */
 	protected void getInfo(RobotPacket e){
-		control.sendRobotPacket(e);
+		control.sendPacket(e);
 	}
 	
 	/**

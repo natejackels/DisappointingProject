@@ -6,7 +6,6 @@
  */
 public abstract class Application {
 	private String name = "";
-	private int maxInstance = 0;	//[<-0:oo], [>0:#]
 	
 	/**
 	 * Method: Application(String name)
@@ -16,18 +15,6 @@ public abstract class Application {
 	 */
 	public Application(String name){
 		this.name = name;
-	}
-	
-	/**
-	 * Method: Application(String name, int maxInstance)
-	 * @author Nathan Jackels
-	 * @param name The name of the application
-	 * @param maxInstance The maximum number of instances of this program
-	 * Description: The super constructor for all implemented applications
-	 */
-	public Application(String name, int maxInstance){
-		this.name = name;
-		this.maxInstance = maxInstance;
 	}
 	
 	/**
