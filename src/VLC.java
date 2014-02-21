@@ -31,6 +31,7 @@ public class VLC extends Application{
 	 * @author Nathan Jackels
 	 * @param e The packet that will be interpreted by VLC
 	 * @return The result of interpreting e [Usually a Display Command]
+	 * @see TSP/Control/Robot_Packet_Design
 	 */
 	@Override
 	public RobotPacket interpret(RobotPacket e){
@@ -95,6 +96,7 @@ public class VLC extends Application{
 			//Search for process and kill if not initialized through robot.
 			try {
 				Runtime.getRuntime().exec("Taskkill /F /IM vlc.exe");	//Kills all VLC processes TODO refine
+				this.vlc = null;
 				return this.sucessful(cmd, args);
 			} catch (IOException e1) {
 				return this.failed(cmd, args);
@@ -133,6 +135,14 @@ public class VLC extends Application{
 		
 	}
 	
+	/**
+	 * Method: next(String cmd, String[] params)
+	 * @author Nathan Jackels
+	 * @param cmd The command to be returned within the response packet.
+	 * @param params The parameters to be returned within the response packet.
+	 * @return The response packet that corresponds to cmd and params.
+	 * Description: A helper method to click the media next key.
+	 */
 	private RobotPacket next(String cmd, String[] params){
 		try {
 			Runtime.getRuntime().exec("cmd.exe /C start ./RobotScripts/next.vbs");
@@ -142,6 +152,14 @@ public class VLC extends Application{
 		}
 	}
 	
+	/**
+	 * Method: prev(String cmd, String[] params)
+	 * @author Nathan Jackels
+	 * @param cmd The command to be returned within the response packet.
+	 * @param params The parameters to be returned within the response packet.
+	 * @return The response packet that corresponds to cmd and params.
+	 * Description: A helper method to click the media previous key.
+	 */
 	private RobotPacket prev(String cmd, String[] params){
 		try {
 			Runtime.getRuntime().exec("cmd.exe /C start ./RobotScripts/prev.vbs");
@@ -151,6 +169,14 @@ public class VLC extends Application{
 		}
 	}
 	
+	/**
+	 * Method: stop(String cmd, String[] params)
+	 * @author Nathan Jackels
+	 * @param cmd The command to be returned within the response packet.
+	 * @param params The parameters to be returned within the response packet.
+	 * @return The response packet that corresponds to cmd and params.
+	 * Description: A helper method to click the media stop key.
+	 */
 	private RobotPacket stop(String cmd, String[] params){
 		try {
 			Runtime.getRuntime().exec("cmd.exe /C start ./RobotScripts/stop.vbs");
@@ -160,6 +186,14 @@ public class VLC extends Application{
 		}
 	}
 	
+	/**
+	 * Method: pause(String cmd, String[] params)
+	 * @author Nathan Jackels
+	 * @param cmd The command to be returned within the response packet.
+	 * @param params The parameters to be returned within the response packet.
+	 * @return The response packet that corresponds to cmd and params.
+	 * Description: A helper method to click the media pause key.
+	 */
 	private RobotPacket pause(String cmd, String[] params){
 		try {
 			Runtime.getRuntime().exec("cmd.exe /C start ./RobotScripts/pause.vbs");
@@ -169,6 +203,14 @@ public class VLC extends Application{
 		}
 	}
 	
+	/**
+	 * Method: successful(String cmd, String[] params)
+	 * @author Nathan Jackels
+	 * @param cmd The command to be returned within the response packet.
+	 * @param params The parameters to be returned within the response packet.
+	 * @return The response packet that corresponds to cmd and params.
+	 * Description: A helper method to get a response packet that corresponds to cmd and params in the case of a successful execution.
+	 */
 	private RobotPacket sucessful(String cmd, String[] params){
 		String[] infoResult = new String[2 + params.length];
 		infoResult[0] = "Computer";
@@ -179,6 +221,14 @@ public class VLC extends Application{
 		return new RobotPacket("Robot", "GoodCommand", infoResult);
 	}
 	
+	/**
+	 * Method: failed(String cmd, String[] params)
+	 * @author Nathan Jackels
+	 * @param cmd The command to be returned within the response packet.
+	 * @param params The parameters to be returned within the response packet.
+	 * @return The response packet that corresponds to cmd and params.
+	 * Description: A helper method to get a response packet that corresponds to cmd and params in the case of a failed execution.
+	 */
 	private RobotPacket failed(String cmd, String[] params){
 		String[] infoResult = new String[2 + params.length];
 		infoResult[0] = "Computer";

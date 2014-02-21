@@ -1,19 +1,45 @@
 import java.io.IOException;
 
-
+/**
+ * Class: Computer
+ * @author Nathan Jackels
+ * The class that runs the vbs scripts in /RobotScripts/
+ */
 public class Computer extends Application {
-	Keyboard keyboard;
+	private Keyboard keyboard;
 	
+	/**
+	 * Method: Computer(Keyboard keyboard)
+	 * @author Nathan Jackels
+	 * @param keyboard The reference to the keyboard used by Robot.
+	 * Description: The constructor for the class.
+	 */
 	public Computer(Keyboard keyboard) {
 		super("Computer");
 		this.keyboard = keyboard;
 	}
 
+	/**
+	 * Method: interpret(RobotPacket e)
+	 * @author Nathan Jackels
+	 * @param e The robotpacket to be interpreted by computer.
+	 * @return The response to the packet
+	 * @see TSP/Control/Robot_Packet_Design
+	 * Description: The method used by Robot to send commands to the computer class
+	 */
 	@Override
 	public RobotPacket interpret(RobotPacket e) {
 		return computer(e.getEvent(), e.getInfo());
 	}
 
+	/**
+	 * Method: computer(String cmd, String[] params)
+	 * @author Nathan Jackels
+	 * @param cmd The command for Computer
+	 * @param params The params associated with the command
+	 * @return The response to the command
+	 * Description: The method that executes the commands.
+	 */
 	private RobotPacket computer(String cmd, String[] params) {
 		switch(cmd){
 		case("VolumeUp"):
@@ -43,6 +69,14 @@ public class Computer extends Application {
 		}
 	}
 	
+	/**
+	 * Method: successful(String cmd, String[] params)
+	 * @author Nathan Jackels
+	 * @param cmd The command parameter
+	 * @param params The array of parameters associated with cmd
+	 * @return A generally succesful packet
+	 * Description: A helper method to create success packets.
+	 */
 	private RobotPacket sucessful(String cmd, String[] params){
 		String[] infoResult = new String[2 + params.length];
 		infoResult[0] = "Computer";
@@ -52,7 +86,15 @@ public class Computer extends Application {
 		}
 		return new RobotPacket("Robot", "GoodCommand", infoResult);
 	}
-	
+
+	/**
+	 * Method: failed(String cmd, String[] params)
+	 * @author Nathan Jackels
+	 * @param cmd The command parameter
+	 * @param params The array of parameters associated with cmd
+	 * @return A failure packet
+	 * Description: A helper method to create failure packets.
+	 */
 	private RobotPacket failed(String cmd, String[] params){
 		String[] infoResult = new String[2 + params.length];
 		infoResult[0] = "Computer";

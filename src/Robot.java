@@ -12,7 +12,6 @@ public class Robot {
 	 *	Method: Robot(Control control)
 	 *	@author Nathan Jackels
 	 *	@param control The reference to control so that packets can be sent back to control.
-	 *	@see TSP/Control/Robot_Packet_Design
 	 *  Description: The constructor for the class
 	 */
 	public Robot(Controller control){
@@ -25,20 +24,11 @@ public class Robot {
 	}
 	
 	/**
-	 * Method: getInfo(RobotPacket e)
-	 * @author Nathan Jackels
-	 * @param e The packet containing the get information commands
-	 * Description: A method for getting information from robot without exiting the application
-	 */
-	protected void getInfo(RobotPacket e){
-		control.sendPacket(e);
-	}
-	
-	/**
 	 *	Method: sendPacket(RobotPacket e)
 	 *	@author Nathan Jackels
 	 *	@param e The RobotPacket that will be interpreted by the Robot class
 	 *  @return The resulting packet from the command (most likely either something to display, or null)
+	 *  @see TSP/Control/Robot_Packet_Design
 	 *  Description: The method used by Control to delegate work to the Robot class
 	 */
 	public RobotPacket sendPacket(RobotPacket e){
