@@ -172,6 +172,7 @@ public class GUI extends javax.swing.JFrame {
            commandToSend = commandField.getText(); 
            debugLabelOutput.setText(commandToSend);
            commandField.setText("");
+		   parent.sendPacket(new GUIPacket(commandToSend));
            if (recording == true){
                recordToggleButton.doClick();
                debugLabelOutput.setText("Command sent while still recording");
