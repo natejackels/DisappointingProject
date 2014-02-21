@@ -1,8 +1,8 @@
 public class SpeechToTextPacket {
 	private String message = "";
 	
-	public SpeechToTextPacket(String message) {
-		this.message = message;
+	public SpeechToTextPacket(String m) {
+		message = m;
 	}
 	
 	public String getMessage() {

@@ -6,7 +6,12 @@
  */
 
 public class Funnel {
-
+	public Controller parent;
+	
+	public Funnel(Controller p) {
+		parent = p;
+	}
+	
 	/*
 		YE OLDE ABSURD COMMAND LIST (valid inputs)
 
@@ -15,7 +20,7 @@ public class Funnel {
 		close vlc
 		play
 	*/
-	public static RobotPacket decodeVLC(String toInterpret){
+	public RobotPacket decodeVLC(String toInterpret){
 		String tempString = toInterpret;
 		switch (tempString){
 			case "open vlc":
@@ -27,9 +32,12 @@ public class Funnel {
 			case "play":
 				RobotPacket playCmd = new RobotPacket("VLC", "Play", null);
 				return playCmd;
+			case "greet":
+				TextToSpeechPacket p = new TextToSpeechPacket("Hello! How are you doing");
+				parent.tts.send(p);
 			default:
 			break;
 		}
-		return new RobotPacket("N/A", null, null);
+		return null;
 	}
 }

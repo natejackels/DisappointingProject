@@ -16,6 +16,8 @@ public class Controller {
 	public SpeechToText stt;
 	public GUI gui;
 	public Robot robot;
+	public Funnel funnel;
+	
 	public static void main(String[] args) {
 		//Create the wrapper (Main program) object
 		Controller controller = new Controller();
@@ -24,10 +26,12 @@ public class Controller {
 		controller.initialize();
 	}
 	public void initialize() {
-		//tts = new TextToSpeech(this);
+		tts = new TextToSpeech(this);
 		stt = new SpeechToText(this);
 		stt.startRecording();
 		gui = new GUI(this);
+		robot = new Robot(this);
+		funnel = new Funnel(this);
 	}
 
 	/**
@@ -37,7 +41,9 @@ public class Controller {
 	 */
 	public void sendPacket(GUIPacket gPack){
 		String toDecode = gPack.getMessage();
-		robot.sendPacket(Funnel.decodeVLC(toDecode));
+		RobotPacket p = funnel.decodeVLC(toDecode);
+		if (p==null) {return;}
+		robot.sendPacket(p);
 	}
 
 	/**
@@ -74,6 +80,8 @@ public class Controller {
 	 */
 	public void sendPacket(STTPacket stPack){
 		String toDecode = stPack.getText();
-		robot.sendPacket(Funnel.decodeVLC(toDecode));
+		RobotPacket p = funnel.decodeVLC(toDecode);
+		if (p==null) {return;}
+		robot.sendPacket(p);
 	}
 }
