@@ -1,5 +1,8 @@
 
-
+/*
+ * Remember to add
+ * "lib/sphinx4.jar" to classpath
+ */
 import edu.cmu.sphinx.decoder.ResultListener;
 import edu.cmu.sphinx.frontend.util.Microphone;
 import edu.cmu.sphinx.instrumentation.AccuracyTracker;
@@ -80,7 +83,7 @@ public class SpeechToText {
     private void sendPacket(NISTAlign aligner) {
         String out = aligner.getHypothesis();
 
-        parent.recieveSTTPacket(new STTPacket(out));
+        parent.sendPacket(new STTPacket(out));
         // parent.recieveSTTPacket(new STTPacket(out)); 
         // debug info
         System.err.print(out + " ");
@@ -294,7 +297,6 @@ public class SpeechToText {
                 System.err.println("Can't read  file " + e);
             }
         }
-
     }
 
     class DecodingThread extends Thread {

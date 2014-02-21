@@ -23,7 +23,7 @@ public class TextToSpeech {
 			}
 		}
 		
-		say("HUG");
+		say("Voices are working for the most part");
 	}
 	
 	public void send(TextToSpeechPacket packet) {
