@@ -54,16 +54,19 @@ public class Control.java {
 				switch (rPack.getEvent()){
 					case "BadPacket":
 						if (rPack.getInfo() == null){
-
+							//Application Invalid
 						} else {
-							
+							//Application commands invalid
 						}
 					break;
 					case "Display":
+						//Display to user
 					break;
 					case "NeedLocation":
+						//get Folder Location
 					break;
 					case "BadGetValue":
+						//BadGetValue
 					break;
 					default:
 					break;

@@ -36,30 +36,9 @@ public class Controller {
 	 *	@author Robin McNally
 	 *	@param gPack Takes a gui packet and decides what class to send it to
 	 */
-	public GUIPacket sendPacket(GUIPacket gPack){
+	public void sendPacket(GUIPacket gPack){
 		String toDecode = gPack.getMessage();
-
-		//Temporary working code
-		switch (toDecode){
-			case "open vlc":
-				RobotPacket openCmd = new RobotPacket("VLC", "Open", null);
-				robot.sendPacket(openCmd);
-			break;
-			case "close vlc":
-				RobotPacket closeCmd = new RobotPacket("VLC", "Close", null);
-				robot.sendPacket(closeCmd);
-			break;
-			case "play":
-				RobotPacket playCmd = new RobotPacket("VLC", "Play", null);
-				robot.sendPacket(playCmd);
-			break;
-			default:
-				GUIPacket err = new GUIPacket();
-				
-				//This may not work yet
-				//gui.sendPacket(err);
-			break;
-		}
+		robot.sendPacket(Funnel.decodeVLC(toDecode));
 	}
 
 	/**
@@ -96,25 +75,6 @@ public class Controller {
 	 */
 	public void sendPacket(STTPacket stPack){
 		String toDecode = gPack.getMessage();
-		switch (toDecode){
-			case "open vlc":
-				RobotPacket openCmd = new RobotPacket("VLC", "Open", null);
-				robot.sendPacket(openCmd);
-			break;
-			case "close vlc":
-				RobotPacket closeCmd = new RobotPacket("VLC", "Close", null);
-				robot.sendPacket(closeCmd);
-			break;
-			case "play":
-				RobotPacket playCmd = new RobotPacket("VLC", "Play", null);
-				robot.sendPacket(playCmd);
-			break;
-			default:
-				STTPacket err = new STTPacket();
-				
-				//This may not work yet
-				//gui.sendPacket(err);
-			break;
-		}
+		robot.sendPacket(Funnel.decodeVLC(toDecode));
 	}
 }
