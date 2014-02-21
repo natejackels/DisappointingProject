@@ -225,6 +225,9 @@ public class VLC extends Application{
 	 * Description: A helper method to get a response packet that corresponds to cmd and params in the case of a successful execution.
 	 */
 	private RobotPacket sucessful(String cmd, String[] params){
+		if(params == null){
+			params = new String[0];
+		}
 		String[] infoResult = new String[2 + params.length];
 		infoResult[0] = "Computer";
 		infoResult[1] = cmd;
@@ -243,6 +246,9 @@ public class VLC extends Application{
 	 * Description: A helper method to get a response packet that corresponds to cmd and params in the case of a failed execution.
 	 */
 	private RobotPacket failed(String cmd, String[] params){
+		if(params == null){
+			params = new String[0];
+		}
 		String[] infoResult = new String[2 + params.length];
 		infoResult[0] = "Computer";
 		infoResult[1] = cmd;
