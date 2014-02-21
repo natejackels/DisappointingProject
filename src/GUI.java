@@ -10,11 +10,11 @@
  * @author njfisher
  */
 public class GUI extends javax.swing.JFrame {
-    public Wrapper parent;
+    public Controller parent;
     String commandToSend = "";  //String to be passed to control after typed in
     boolean recording = false;  //used for toggle button
     
-    public GUI(Wrapper W) {
+    public GUI(Controller W) {
         parent = W;
         initComponents();
         this.setVisible(true);
@@ -172,6 +172,7 @@ public class GUI extends javax.swing.JFrame {
            commandToSend = commandField.getText(); 
            debugLabelOutput.setText(commandToSend);
            commandField.setText("");
+		   parent.sendPacket(new GUIPacket(commandToSend));
            if (recording == true){
                recordToggleButton.doClick();
                debugLabelOutput.setText("Command sent while still recording");

@@ -24,11 +24,10 @@ public class Controller {
 		controller.initialize();
 	}
 	public void initialize() {
-		tts = new TextToSpeech(this);
+		//tts = new TextToSpeech(this);
 		stt = new SpeechToText(this);
 		stt.startRecording();
 		gui = new GUI(this);
-
 	}
 
 	/**
@@ -54,7 +53,7 @@ public class Controller {
 		TODO -> Get Folder location
 		TODO -> Bad Get Value
 	*/
-	public RobotPacket sendPacket(RobotPacket rPack){
+	public void sendPacket(RobotPacket rPack){
 		//Not much happens here
 		//Error handling will pick up after demo
 	}
@@ -74,7 +73,7 @@ public class Controller {
 	 *	@param gPack Takes a stt packet and decides what class to send it to
 	 */
 	public void sendPacket(STTPacket stPack){
-		String toDecode = gPack.getMessage();
+		String toDecode = stPack.getText();
 		robot.sendPacket(Funnel.decodeVLC(toDecode));
 	}
 }
