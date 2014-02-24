@@ -28,36 +28,25 @@ import java.util.Iterator;
 import java.util.List;
 
 /**
- * Class: SpeechToText
- * Description: provides an easy to use interface for the Sphinx Speech to Text API
- * @author Stephen J Radachy
+ *
+ * @author sjradach
  */
 public class SpeechToText {
 
-    // link to parent controller
     private Controller parent;
-    // instantiation of a recognizer for sphinx
     private STTService sttRecognizer;
-    // thread for asynchrous decoding
     private volatile DecodingThread decode;
 
-    /**
-     * Method: SpeechToText(Controller w)
-     * Description: constructor for SpeechToText class
-     * @param w a reference to the parent controller
-     * @author Stephen J Radachy
-     */
     public SpeechToText(Controller w) {
         parent = w;
-        // instantiate and allocate recognizer
+        //this.getClass().getResource("hellongram.config.xml");
         sttRecognizer = new STTService(this.getClass().getResource("hellongram.config.xml"),this.getClass().getResource("hellongram.test"),false);
+        //sttRecognizer = new STTService("src/disappointingstt/hellongram.config.xml","src/disappointingstt/hellongram.test",false);
         sttRecognizer.allocate();
     }
 
     /**
-     * Method: decode()
-     * Description: creates and starts a new thread to decode mic input
-     * @author Stephen J Radachy
+     * Start decoding.
      */
     public void decode() {
         decode = new DecodingThread();
@@ -66,21 +55,20 @@ public class SpeechToText {
     }
 
      /**
-     * Method: terminate()
-     * Description: properly disposes of all resource needed for Speech to Text
-     * @author Stephen J Radachy
+     * Terminates this Live object, terminates all Microphones owned by the
+     * LiveDecoders.
      */
     public void terminate() {
         stopRecording();
         sttRecognizer.deallocate();
         decode = null;
         System.gc();
+        
     }
     /**
-     * Method: startRecording()
-     * Description: Attempts to start recording
+     * Start recording.
+     *
      * @return true if recording started successfully, false if it did not
-     * @author Stephen J Radachy
      */
     public boolean startRecording() {
         sttRecognizer.getMicrophone().clear();
@@ -88,17 +76,6 @@ public class SpeechToText {
         decode();
         return sttRecognizer.getMicrophone().isRecording();
     }
-    
-    /**
-     * Method: isRecording()
-     * Description: Checks to see if recording
-     * @return true if is recording, false if not
-     * @author Stephen J Radachy
-     */
-    public boolean isRecording(){
-        return sttRecognizer.getMicrophone().isRecording();
-    }
-    
 
     /**
      * Stop recording.
