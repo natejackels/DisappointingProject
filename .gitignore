@@ -11,4 +11,5 @@ build/
 .Trashes
 ehthumbs.db
 Thumbs.db
+*~
 /bin
