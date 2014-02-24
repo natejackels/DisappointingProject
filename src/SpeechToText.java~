@@ -1,5 +1,5 @@
 
-/* Mitch - Remove later
+/*
  * Remember to add
  * "lib/sphinx4.jar"
  * "lib/jsapi-1.0-base.jar"
@@ -83,10 +83,8 @@ public class SpeechToText {
      * @author Stephen J Radachy
      */
     public boolean startRecording() {
-        // look into volume control - see bookmarked github repo
         sttRecognizer.getMicrophone().clear();
         sttRecognizer.getMicrophone().startRecording();
-        // fix multiple decoderthread stuff
         decode();
         return sttRecognizer.getMicrophone().isRecording();
     }
@@ -103,15 +101,11 @@ public class SpeechToText {
     
 
     /**
-     * Method: stopRecording()
-     * Description: stops recording (only temporary until startrecording )
-     * @author Stephen J Radachy
+     * Stop recording.
      */
     public void stopRecording() {
         sttRecognizer.getMicrophone().stopRecording();
-        // look into volume control - see bookmarked github repo
     }
-
 
     private void sendPacket(NISTAlign aligner) {
         String out = aligner.getHypothesis();
