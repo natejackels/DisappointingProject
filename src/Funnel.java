@@ -75,13 +75,13 @@ public class Funnel {
 				} else {
 					minArr[0] = distArr[i-1][j] + 1;
 					minArr[1] = distArr[i][j-1] + 1;
-					minarr[2] = distArr[i-1][j-1] + 1;
+					minArr[2] = distArr[i-1][j-1] + 1;
 					distArr[i][j] = minimum(minArr);
 				}
 			}
 		}
 
-		return distArr[stringOne.length() - 1][stringTwo.length() - 1]
+		return distArr[stringOne.length() - 1][stringTwo.length() - 1];
 	}
 
 
