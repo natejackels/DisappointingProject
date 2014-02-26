@@ -35,7 +35,26 @@ public class Funnel {
 			case "greet":
 				TextToSpeechPacket p = new TextToSpeechPacket("Hello! How are you doing");
 				parent.tts.send(p);
+			case "pause":
+				RobotPacket pauseCmd = new RobotPacket("VLC", "Pause", null);
+				return pauseCmd;
+			case "what can i do?":
+				RobotPacket whatCmd = new RobotPacket("VLC", "What", null);
+				return whatCmd;
+			case "what is vlc":
+				RobotPacket whatelseCmd = new RobotPacket("VLC", "WhatIs", null);
+				return whatelseCmd;
 			default:
+				if (tempString.contains("play")){
+					tempString = tempString.substring(4);
+					if (tempString.charAt(0) != 'C'){
+						tempString = "$" + tempString;
+					}
+					String[] sent = new String[1];
+					sent[0] = tempString;
+					RobotPacket alternatePlay = new RobotPacket("VLC", "Play", sent);
+					return alternatePlay;
+				}
 			break;
 		}
 		return null;

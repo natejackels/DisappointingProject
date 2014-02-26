@@ -4,12 +4,9 @@
  *	Description: This class handles the communication between the four other parts of the program
  */
 /*
-	TODO -> decide on args for main
 	TODO -> Implement main
-	TODO -> Implement sendPacket(guiPacket)
-	TODO -> Implement sendPacket(RobotPacket)
-	TODO -> Implement sendPacket(ttsPacket)
-	TODO -> Implement sendPacket(sttPacket)
+	TODO -> Keep track of active program
+	TODO -> keep track of the settings of the system
 */
 public class Controller {
 	public TextToSpeech tts;
@@ -37,13 +34,37 @@ public class Controller {
 	/**
 	 *	Method: sendPacket(guiPacket)
 	 *	@author Robin McNally
-	 *	@param gPack Takes a gui packet and decides what class to send it to
+	 *	@param 	gPack 	Takes a gui packet and decides what class to send it to
+	 *  @return	 		a string or set of strings to print out to the user
 	 */
-	public void sendPacket(GUIPacket gPack){
+	public String[] sendPacket(GUIPacket gPack){
 		String toDecode = gPack.getMessage();
+
+		//There will be decision making code here eventually
 		RobotPacket p = funnel.decodeVLC(toDecode);
-		if (p==null) {return;}
-		robot.sendPacket(p);
+		if (p==null) {return null;}
+		p = robot.sendPacket(p);
+		switch (p.getEvent()){
+			case "BadPacket":
+			break;
+			case "FailedOpen":
+			break;
+			case "Display":
+				String[] DisplayStrings = p.getInfo();
+				TextToSpeechPacket Disp = new TextToSpeechPacket(DisplayStrings[0]);
+				tts.send(Disp);
+				return DisplayStrings;
+			case "BadGetValue":
+			break;
+			case "GoodCommand":
+				return null;
+			case "CommandFailed":
+			break;
+			default:
+			break;
+		}
+		return null;
+		
 	}
 
 	/**
