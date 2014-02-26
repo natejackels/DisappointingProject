@@ -104,7 +104,7 @@ public class SpeechToText {
 
     /**
      * Method: stopRecording()
-     * Description: stops recording (only temporary until startrecording )
+     * Description: stops recording (only temporary until startrecording is invoked )
      * @author Stephen J Radachy
      */
     public void stopRecording() {
@@ -112,43 +112,59 @@ public class SpeechToText {
         // look into volume control - see bookmarked github repo
     }
 
-
+    /**
+     * Method: sendPacket()
+     * Description: sends a STTPacket to the parent (Controller)
+     * @param aligner a Sphinx object which pertinent decoded information is stored
+     * @author Stephen J Radachy
+     */
     private void sendPacket(NISTAlign aligner) {
         String out = aligner.getHypothesis();
-
         parent.sendPacket(new STTPacket(out));
-        // parent.recieveSTTPacket(new STTPacket(out)); 
-        // debug info
+        
+        // stuff for debugging - eventually integrate into the STTPacket
+        /*
         System.err.print(out + " ");
         float wordAccuracy = (aligner.getTotalWordAccuracy() * 100);
         System.err.print(wordAccuracy + "% ");
         float sentenceAccuracy = (aligner.getTotalSentenceAccuracy() * 100);
-        System.err.println(sentenceAccuracy + "%");
+        System.err.println(sentenceAccuracy + "%");*/
 
     }
 
+    /**
+     * Class: STTService
+     * Description: A custom recognizer for the Sphinx API to interface with
+     * @author Stephen J Radachy
+     */
     class STTService {
 
+        // file locations
         private String configName;
         private String testFile;
+        // Sphinx config object
         private ConfigurationManager cm;
+        // generic Sphinx stuff
         private Recognizer recognizer;
         private Microphone microphone;
         private SpeedTracker speedTracker;
-        private NISTAlign aligner;
         private boolean allocated;
+        // if true reference text is in a random order
+        private boolean randomReferenceOrder;
+        // Sphinx output object
+        private NISTAlign aligner;
+
+        //recognition stuff
         private List<String> referenceList;
         private Iterator<String> iterator;
-        private boolean randomReferenceOrder;
 
         /**
-         * Creates a new live recognizer
-         *
-         * @param name the name of the recognizer
+         * Method: STTService(URL configName, URL testFile, boolean randomReferenceOrder)
+         * Description: Constructor for STTService
          * @param configName the config file for the recognizer
          * @param testFile the test utterance file
-         * @param randomReferenceOrder if true reference text is presented in
-         * random order.
+         * @param randomReferenceOrder if true reference text is presented in a random order
+         * @author Stephen J Radachy
          */
         public STTService(URL configName, URL testFile, boolean randomReferenceOrder) {
             this.configName = configName.getFile();
