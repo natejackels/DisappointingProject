@@ -72,10 +72,15 @@ public class VLC extends Application{
 			if(args == null){
 				args = new String[0];
 			}
-			String[] vlcparams = new String[args.length + 1];
+			String[] vlcparams = new String[args.length + 3];
 			vlcparams[0] = "C:\\Program Files (x86)\\VideoLAN\\VLC\\vlc.exe";
 			for(int i = 0; i < args.length; i++){
 				vlcparams[i+1] = args[i];
+			}
+			vlcparams[args.length+1] = "--one-instance";
+			vlcparams[args.length+2] = "--playlist-enqueue";
+			for(String t : vlcparams){
+				System.out.println(t);
 			}
 			ProcessBuilder pb = new ProcessBuilder(vlcparams);
 			try {
