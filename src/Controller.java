@@ -37,7 +37,7 @@ public class Controller {
 	 *	@param 	gPack 	Takes a gui packet and decides what class to send it to
 	 *  @return	 		a string or set of strings to print out to the user
 	 */
-	public String[] sendPacket(GUIPacket gPack){
+	public GUIPacket sendPacket(GUIPacket gPack){
 		String toDecode = gPack.getMessage();
 
 		//There will be decision making code here eventually
@@ -46,20 +46,37 @@ public class Controller {
 		p = robot.sendPacket(p);
 		switch (p.getEvent()){
 			case "BadPacket":
+				if (p.getInfo() == null){
+					TextToSpeechPacket Disp = new TextToSpeechPacket("I'm sorry we don't support a program that job");
+					GUIPacket GUIDisplay = new GUIPacket(returnString);
+					tts.send(Disp);
+					return GUIDisplay;
+				} else {
+
+				}
+				return null;
 			break;
 			case "FailedOpen":
-			break;
+				return null;
 			case "Display":
 				String[] DisplayStrings = p.getInfo();
-				TextToSpeechPacket Disp = new TextToSpeechPacket(DisplayStrings[0]);
-				tts.send(Disp);
-				return DisplayStrings;
+				String returnString = "";
+				if (p != null){
+					for (int i = 0; i < DisplayStrings.length; i++){
+						returnString += DisplayStrings[i];
+					}
+					TextToSpeechPacket Disp = new TextToSpeechPacket(DisplayStrings[0]);
+					GUIPacket GUIDisplay = new GUIPacket(returnString);
+					tts.send(Disp);
+					return GUIDisplay;
+				}
+				return null;
 			case "BadGetValue":
-			break;
+				return null;
 			case "GoodCommand":
 				return null;
 			case "CommandFailed":
-			break;
+				return null;
 			default:
 			break;
 		}
