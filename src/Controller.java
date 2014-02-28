@@ -47,15 +47,23 @@ public class Controller {
 		switch (p.getEvent()){
 			case "BadPacket":
 				if (p.getInfo() == null){
-					TextToSpeechPacket Disp = new TextToSpeechPacket("I'm sorry we don't support a program that job");
+					TextToSpeechPacket Disp = new TextToSpeechPacket("I'm sorry we don't support a program that does that job");
 					GUIPacket GUIDisplay = new GUIPacket("NULL");
 					tts.send(Disp);
 					return GUIDisplay;
 				} else {
-
+					//More complex improper command to come during the second sprint
+					TextToSpeechPacket Disp = new TextToSpeechPacket("I didn't understand you");
+					GUIPacket GUIDisplay = new GUIPacket("NULL");
+					tts.send(Disp);
+					return GUIDisplay;
 				}
 				return null;
 			case "FailedOpen":
+					TextToSpeechPacket Disp = new TextToSpeechPacket("the program did not open");
+					GUIPacket GUIDisplay = new GUIPacket("NULL");
+					tts.send(Disp);
+					return GUIDisplay;
 				return null;
 			case "Display":
 				String[] DisplayStrings = p.getInfo();
@@ -71,10 +79,16 @@ public class Controller {
 				}
 				return null;
 			case "BadGetValue":
+					//Implement later
 				return null;
 			case "GoodCommand":
+					TextToSpeechPacket Disp = new TextToSpeechPacket("something went wrong");
+					GUIPacket GUIDisplay = new GUIPacket("NULL");
+					tts.send(Disp);
+					return GUIDisplay;
 				return null;
 			case "CommandFailed":
+
 				return null;
 			default:
 			break;
