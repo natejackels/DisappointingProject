@@ -90,7 +90,7 @@ public class SpeechToText {
         decode();
         return sttRecognizer.getMicrophone().isRecording();
     }
-    
+
     /**
      * Method: isRecording()
      * Description: Checks to see if recording
@@ -100,7 +100,7 @@ public class SpeechToText {
     public boolean isRecording(){
         return sttRecognizer.getMicrophone().isRecording();
     }
-    
+
 
     /**
      * Method: stopRecording()
@@ -121,7 +121,7 @@ public class SpeechToText {
     private void sendPacket(NISTAlign aligner) {
         String out = aligner.getHypothesis();
         parent.sendPacket(new STTPacket(out));
-        
+
         // stuff for debugging - eventually integrate into the STTPacket
         /*
         System.err.print(out + " ");
@@ -172,26 +172,29 @@ public class SpeechToText {
             this.randomReferenceOrder = randomReferenceOrder;
             allocated = false;
         }
-        
+
         /**
-         * Gets the test file in use by this recognizer
+         * Method: getTestFile()
+         * Description: Gets the test file in use by this recognizer
          * @return the test file
+         * @author Stephen J Radachy
          */
         String getTestFile() {
             return testFile;
         }
 
         /**
-         * Allocates this recognizer
-         *
-         * @return
+         * Method: allocate
+         * Description: Allocates this recognizer
+         * @return true if has been allocated, false otherwise
+         * @author Stephen J Radachy
          */
         boolean allocate() {
             try {
                 if (!allocated) {
                     URL url = new File(configName).toURI().toURL();
                     cm = new ConfigurationManager(url);
-                    //System.out.println(url);
+
                     recognizer = (Recognizer) cm.lookup("recognizer");
                     microphone = (Microphone) cm.lookup("microphone");
                     speedTracker = (SpeedTracker) cm.lookup("speedTracker");
@@ -324,7 +327,7 @@ public class SpeechToText {
             }
             return next;
         }
-        
+
         /**
          * Sets the file of test utterances to be the given file
          * @param testFile the name of the test file
@@ -375,7 +378,7 @@ public class SpeechToText {
                 try {
                 recognizer.recognize(sttRecognizer.getNextReference());
                 } catch (Exception e){
-                    
+
                 }
             }
 
