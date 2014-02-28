@@ -46,10 +46,7 @@ public class Funnel {
 				return whatelseCmd;
 			default:
 				if (tempString.contains("play")){
-					tempString = tempString.substring(4);
-					if (tempString.charAt(0) != 'C'){
-						tempString = "$" + tempString;
-					}
+					tempString = tempString.substring(5);
 					String[] sent = new String[1];
 					sent[0] = tempString;
 					RobotPacket alternatePlay = new RobotPacket("VLC", "Play", sent);

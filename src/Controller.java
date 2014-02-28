@@ -48,14 +48,13 @@ public class Controller {
 			case "BadPacket":
 				if (p.getInfo() == null){
 					TextToSpeechPacket Disp = new TextToSpeechPacket("I'm sorry we don't support a program that job");
-					GUIPacket GUIDisplay = new GUIPacket(returnString);
+					GUIPacket GUIDisplay = new GUIPacket("NULL");
 					tts.send(Disp);
 					return GUIDisplay;
 				} else {
 
 				}
 				return null;
-			break;
 			case "FailedOpen":
 				return null;
 			case "Display":

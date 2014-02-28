@@ -49,6 +49,10 @@ public class VLC extends Application{
 	 *	Description: A method that interprets commands for the VLC program and carries them out or delegates them further if necessary.
 	 */
 	private RobotPacket vlc(String cmd, String[] args){
+		for (String s : args) {
+			System.out.println("ARgs: " + s);
+		}
+		
 		switch(cmd){
 		case("What"):	//DONE
 			String[] canDo = {"The Commands for VLC are" + "Play or Pause", "Play song or artist", "What songs do I have - this will list the songs in your library.", "Open VLC", "Close VLC"};
