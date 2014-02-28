@@ -1,3 +1,9 @@
+import marytts.client.MaryClient;
+import marytts.client.MaryGUIClient;
+import marytts.server.Mary;
+import marytts.server.MaryServer;
+import marytts.util.http.Address;
+
 import com.sun.speech.freetts.*;
 /*If the above line is giving you an error, that is because
  * you need to add "lib/freetts.jar" to your classpath
@@ -6,10 +12,32 @@ public class TextToSpeech {
 	public Controller parent;
 	private Voice voice;
 	
-	public TextToSpeech(Controller w) {
+	public TextToSpeech(Controller w){
 		parent = w;
 		//Load up the freeTTS voice manager
 		
+		//Start the server for tts
+		Mary mary = new Mary();
+		try {
+			mary.main(new String[0]);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		/*MaryServer server = new MaryServer();
+		server.run();*/
+		//server.run();
+		
+		//Start the client
+		/*MaryGUIClient client;
+		try {
+			client = new MaryGUIClient();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return;
+		}*/
+		/*
 		String path = System.getProperty("user.dir")+"\\src\\mbrola";
 		System.out.println("Searching " + path + " for voices");
 		System.setProperty("mbrola.base", path);
@@ -29,7 +57,7 @@ public class TextToSpeech {
 			}
 		}
 		
-		//say("Voices are working for the most part");
+		//say("Voices are working for the most part");*/
 	}
 	
 	/**Send a packet to TTS.  The message of the packet will be spoken

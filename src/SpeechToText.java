@@ -202,7 +202,7 @@ public class SpeechToText {
                         public void newResult(Result result) {
                             if (result.isFinal()) {
                                 sendPacket(sttRecognizer.getAligner());
-                                System.out.println(result.getBestToken().getWordUnitPath());
+                                //System.out.println(result.getBestToken().getWordUnitPath());
                             }
                         }
 
@@ -215,9 +215,9 @@ public class SpeechToText {
                 }
 
             } catch (PropertyException pe) {
-                System.err.println("Can't configure recognizer " + pe);
+                //System.err.println("Can't configure recognizer " + pe);
             } catch (IOException ioe) {
-                System.err.println("Can't allocate recognizer " + ioe);
+                //System.err.println("Can't allocate recognizer " + ioe);
             }
             return allocated;
         }
@@ -341,9 +341,9 @@ public class SpeechToText {
                 iterator = referenceList.listIterator();
                 reader.close();
             } catch (FileNotFoundException e) {
-                System.err.println("Can't find  file " + e);
+                //System.err.println("Can't find  file " + e);
             } catch (IOException e) {
-                System.err.println("Can't read  file " + e);
+                //System.err.println("Can't read  file " + e);
             }
         }
     }
@@ -370,7 +370,7 @@ public class SpeechToText {
                 try {
                     Thread.sleep(500);
                 } catch (InterruptedException ie) {
-                    ie.printStackTrace();
+                    //ie.printStackTrace();
                 }
                 try {
                 recognizer.recognize(sttRecognizer.getNextReference());
