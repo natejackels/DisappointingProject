@@ -12,14 +12,11 @@ public class Funnel {
 		parent = p;
 	}
 	
-	/*
-		YE OLDE ABSURD COMMAND LIST (valid inputs)
-
-		--more later--
-		open vlc
-		close vlc
-		play
-	*/
+	/**
+	 *  This method decodes a string into a packet readable by RobotPacket
+	 *	@param		toInterpret		The string to transform into a viable RobotPacket
+	 *  @return 					The RobotPacket that details robot's job
+	 */
 	public RobotPacket decodeVLC(String toInterpret){
 		String tempString = toInterpret;
 		switch (tempString){
@@ -44,6 +41,11 @@ public class Funnel {
 			case "what is vlc":
 				RobotPacket whatelseCmd = new RobotPacket("VLC", "WhatIs", null);
 				return whatelseCmd;
+			case "next":
+				RobotPacket nextCmd = new RobotPacket("VLC", "Next", null);
+				return nextCmd;
+			case "prev":
+				RobotPacket	prevCmd = new RobotPacket("VLC", "Next", null);
 			default:
 				if (tempString.contains("play")){
 					tempString = tempString.substring(5);
