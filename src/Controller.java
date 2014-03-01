@@ -132,7 +132,57 @@ public class Controller {
 	public void sendPacket(STTPacket stPack){
 		String toDecode = stPack.getText();
 		RobotPacket p = funnel.decodeVLC(toDecode);
-		if (p==null) {return;}
-		robot.sendPacket(p);
+		if (p==null) {return null;}
+		p = robot.sendPacket(p);
+		switch (p.getEvent()){
+			case "BadPacket":
+				if (p.getInfo() == null){
+					TextToSpeechPacket Disp = new TextToSpeechPacket("I'm sorry we don't support a program that does that job");
+					GUIPacket GUIDisplay = new GUIPacket("NULL");
+					tts.send(Disp);
+					return GUIDisplay;
+				} else {
+					//More complex improper command to come during the second sprint
+					TextToSpeechPacket Disp = new TextToSpeechPacket("I didn't understand you");
+					GUIPacket GUIDisplay = new GUIPacket("NULL");
+					tts.send(Disp);
+					return GUIDisplay;
+				}
+				return null;
+			case "FailedOpen":
+					TextToSpeechPacket Disp = new TextToSpeechPacket("the program did not open");
+					GUIPacket GUIDisplay = new GUIPacket("NULL");
+					tts.send(Disp);
+					return GUIDisplay;
+				return null;
+			case "Display":
+				String[] DisplayStrings = p.getInfo();
+				String returnString = "";
+				if (p != null){
+					for (int i = 0; i < DisplayStrings.length; i++){
+						returnString += DisplayStrings[i];
+					}
+					TextToSpeechPacket Disp = new TextToSpeechPacket(DisplayStrings[0]);
+					GUIPacket GUIDisplay = new GUIPacket(returnString);
+					tts.send(Disp);
+					return GUIDisplay;
+				}
+				return null;
+			case "BadGetValue":
+					//Implement later
+				return null;
+			case "GoodCommand":
+					TextToSpeechPacket Disp = new TextToSpeechPacket("something went wrong");
+					GUIPacket GUIDisplay = new GUIPacket("NULL");
+					tts.send(Disp);
+					return GUIDisplay;
+				return null;
+			case "CommandFailed":
+
+				return null;
+			default:
+			break;
+		}
+		return null;
 	}
 }
