@@ -22,6 +22,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -140,7 +141,7 @@ public class SpeechToText {
     class STTService {
 
         // file locations
-        private String configName;
+        private final String configName;
         private String testFile;
         // Sphinx config object
         private ConfigurationManager cm;
@@ -148,11 +149,11 @@ public class SpeechToText {
         private Recognizer recognizer;
         private Microphone microphone;
         private SpeedTracker speedTracker;
+        private NISTAlign aligner;
         private boolean allocated;
         // if true reference text is in a random order
-        private boolean randomReferenceOrder;
-        // Sphinx accuracy tracker stuff
-        private NISTAlign aligner;
+        private final boolean randomReferenceOrder;
+
 
         //recognition stuff
         private List<String> referenceList;
@@ -210,14 +211,15 @@ public class SpeechToText {
 
                     // sets listener to send information
                     recognizer.addResultListener(new ResultListener() {
+                        @Override
                         public void newResult(Result result) {
                             if (result.isFinal()) {
                                 sendPacket(result);
                             }
                         }
 
+                        @Override
                         public void newProperties(PropertySheet ps) throws PropertyException {
-                            return;
                         }
                     });
                     allocated = true;
@@ -225,7 +227,7 @@ public class SpeechToText {
 
             } catch (PropertyException pe) {
                 System.err.println("Can't configure recognizer " + pe);
-            } catch (IOException ioe) {
+            } catch (MalformedURLException ioe) {
                 System.err.println("Can't allocate recognizer " + ioe);
             }
             return allocated;
@@ -354,7 +356,7 @@ public class SpeechToText {
         void setTestFile(String testFile) {
             try {
                 this.testFile = testFile;
-                referenceList = new ArrayList<String>();
+                referenceList = new ArrayList<>();
                 BufferedReader reader = new BufferedReader(new FileReader(testFile));
                 String line = null;
                 while ((line = reader.readLine()) != null) {
@@ -391,6 +393,7 @@ public class SpeechToText {
          *
          * @author Stephen J Radachy
          */
+        @Override
         public void run() {
             Microphone microphone = sttRecognizer.getMicrophone();
             Recognizer recognizer = sttRecognizer.getRecognizer();
@@ -401,13 +404,17 @@ public class SpeechToText {
                 try {
                     Thread.sleep(500);
                 } catch (InterruptedException ie) {
-                    ie.printStackTrace();
+                    for (StackTraceElement stackTrace : ie.getStackTrace()) {
+                        System.out.println(stackTrace);
+                    }
                 }
                 try {
                     
-                    recognizer.recognize("play");
+                    recognizer.recognize(sttRecognizer.getNextReference());
                 } catch (IllegalStateException e) {
-                    e.printStackTrace();
+                    for (StackTraceElement stackTrace : e.getStackTrace()) {
+                        System.out.println(stackTrace);
+                    }
                 }
             }
 
