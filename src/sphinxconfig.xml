@@ -4,10 +4,6 @@
    Sphinx-4 Configuration file
 -->
 
-<!-- ******************************************************** -->
-<!--  biship  configuration file                              -->
-<!-- ******************************************************** -->
-
 <config>        
     <!-- ******************************************************** -->
     <!-- frequently tuned properties                              -->
@@ -25,14 +21,14 @@
 
     
     <!-- ******************************************************** -->
-    <!-- word recognizer configuration                            -->
+    <!-- word recognizer configuration    //<item>accuracyTracker </item>                        -->
     <!-- ******************************************************** --> 
     
     <component name="recognizer" 
                           type="edu.cmu.sphinx.recognizer.Recognizer">
         <property name="decoder" value="decoder"/>
         <propertylist name="monitors">
-            <item>accuracyTracker </item>
+            
             <item>speedTracker </item>
             <item>memoryTracker </item>
             <item>recognizerMonitor </item>
@@ -141,7 +137,7 @@
     <component name="dictionary" 
         type="edu.cmu.sphinx.linguist.dictionary.FastDictionary">
         <property name="dictionaryPath"
-                  value="resource:/WSJ_8gau_13dCep_16k_40mel_130Hz_6800Hz/dict/cmudict.0.6d"/>
+                  value="resource:/sphinxdictionary.txt"/>
         <property name="fillerPath" 
 	          value="resource:/WSJ_8gau_13dCep_16k_40mel_130Hz_6800Hz/noisedict"/>
         <property name="addSilEndingPronunciation" value="false"/>
@@ -149,14 +145,15 @@
         <property name="unitManager" value="unitManager"/>
     </component>
     
+    
 
     <!-- ******************************************************** -->
-    <!-- The Language Model configuration                         -->
+    <!-- The Language Model configuration //edu.cmu.sphinx.linguist.language.ngram.large.LargeNGramModel                        -->
     <!-- ******************************************************** -->
     <component name="trigramModel" 
         type="edu.cmu.sphinx.linguist.language.ngram.SimpleNGramModel">
         <property name="location" 
-            value="resource:/hellongram.trigram.lm"/>
+            value="resource:/sphinxlanguagemodel.txt"/>
         <property name="logMath" value="logMath"/>
         <property name="dictionary" value="dictionary"/>
         <property name="maxDepth" value="3"/>

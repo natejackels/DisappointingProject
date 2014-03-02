@@ -184,7 +184,7 @@
         </Component>
         <Component class="javax.swing.JToggleButton" name="recordToggleButton">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Record Toggle"/>
+            <Property name="text" type="java.lang.String" value="Start Recording"/>
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="recordToggleButtonActionPerformed"/>

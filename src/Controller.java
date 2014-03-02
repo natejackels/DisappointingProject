@@ -25,7 +25,8 @@ public class Controller {
 	public void initialize() {
 		tts = new TextToSpeech(this);
 		stt = new SpeechToText(this);
-		stt.startRecording();
+                // EDIT 3/1/14 by Stephen J Radachy
+                // moved startRecording to gui
 		gui = new GUI(this);
 		robot = new Robot(this);
 		funnel = new Funnel(this);
@@ -132,6 +133,9 @@ public class Controller {
 	public void sendPacket(STTPacket stPack){
 		String toDecode = stPack.getText();
 		RobotPacket p = funnel.decodeVLC(toDecode);
+                // EDIT 3/1/14 by Stephen J Radachy
+                // added following line:
+                gui.sendDebugText(toDecode);
 		if (p==null) {return null;}
 		p = robot.sendPacket(p);
 		switch (p.getEvent()){

@@ -1,0 +1,9 @@
+play
+next
+pause
+previous
+open vlc
+close vlc
+what can i do
+what is vlc
+greet
