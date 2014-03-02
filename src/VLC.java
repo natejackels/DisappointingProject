@@ -56,10 +56,10 @@ public class VLC extends Application{
 		switch(cmd){
 		case("What"):	//DONE
 			String[] canDo = {"The Commands for VLC are" + "Play or Pause", "Play song or artist", "What songs do I have - this will list the songs in your library.", "Open VLC", "Close VLC"};
-		return new RobotPacket("Robot", "Display",canDo);
+			return new RobotPacket("Robot", "Display",canDo);
 		case("WhatIs"):	//DONE
 			String[] vlcIs = {"VLC is a music and video player.", "Unlike other programs, VLC can play nearly any song or video you have on your computer.", "It can also play DVDs and CDs that you put in your computer."};
-		return new RobotPacket("Robot", "Display", vlcIs);
+			return new RobotPacket("Robot", "Display", vlcIs);
 		case("Play"):	//DONE
 			if((args == null) || (args.length == 0)){
 				//Pause if initialized
@@ -68,32 +68,33 @@ public class VLC extends Application{
 				}
 			}
 			{
-			//open single file or multiple files or empty playlist
-			if(args == null){
-				args = new String[0];
-			}
-			String[] vlcparams = new String[args.length + 3];
-			vlcparams[0] = "C:\\Program Files (x86)\\VideoLAN\\VLC\\vlc.exe";
-			for(int i = 0; i < args.length; i++){
-				vlcparams[i+1] = args[i];
-			}
-			vlcparams[args.length+1] = "--one-instance";
-			vlcparams[args.length+2] = "--playlist-enqueue";
-			for(String t : vlcparams){
-				System.out.println(t);
-			}
-			ProcessBuilder pb = new ProcessBuilder(vlcparams);
-			try {
-				vlc = pb.start();
-				return this.sucessful(cmd, args);
-			} catch (IOException e) {
-				String[] info = {e.getMessage()};
-				return new RobotPacket("VLC", "FailedOpen", info);
-			}
+				//open single file or multiple files or empty playlist
+				if(args == null){
+					args = new String[0];
+				}
+				String[] vlcparams = new String[args.length + 3];
+				vlcparams[0] = "C:\\Program Files (x86)\\VideoLAN\\VLC\\vlc.exe";
+				for(int i = 0; i < args.length; i++){
+					vlcparams[i+1] = args[i];
+				}
+				vlcparams[args.length+1] = "--one-instance";
+				vlcparams[args.length+2] = "--playlist-enqueue";
+				for(String t : vlcparams){
+					System.out.println(t);
+				}
+				ProcessBuilder pb = new ProcessBuilder(vlcparams);
+				try {
+					vlc = pb.start();
+					return this.sucessful(cmd, args);
+				} catch (IOException e) {
+					String[] info = {e.getMessage()};
+					return new RobotPacket("VLC", "FailedOpen", info);
+				}
 			}
 		case("Pause"):	//DONE
 			return pause(cmd, args);
-		case("ListSongs"):	//TODO
+		case("ListSongs"):	//TODO Sprint 2
+			return this.failed(cmd, args);/*
 			if(this.vlcFolder.length() == 0){	//Music location not yet loaded
 				String[] need = {"VLCmusic"};
 				return new RobotPacket("Robot", "NeedLocation", need);
@@ -112,37 +113,38 @@ public class VLC extends Application{
 			return new RobotPacket("Robot", "Display", (String[])e.toArray());	//TODO Get song Artist / Title from music info
 		}
 
-		return null;
+		return null;*/
 		case("Close"):
 			if(vlc != null) vlc.destroy();
-		//Search for process and kill if not initialized through robot.
-		try {
-			Runtime.getRuntime().exec("Taskkill /F /IM vlc.exe");	//Kills all VLC processes TODO refine
-			this.vlc = null;
-			return this.sucessful(cmd, args);
-		} catch (IOException e1) {
-			return this.failed(cmd, args);
-		}
+			//Search for process and kill if not initialized through robot.
+			try {
+				Runtime.getRuntime().exec("Taskkill /F /IM vlc.exe");	//Kills all VLC processes TODO refine
+				this.vlc = null;
+				return this.sucessful(cmd, args);
+			} catch (IOException e1) {
+				return this.failed(cmd, args);
+			}
 		case("Open"):
 			if(vlc == null){
 				try{
-					ProcessBuilder pb = new ProcessBuilder("C:\\Program Files (x86)\\VideoLAN\\VLC\\vlc.exe");
+					ProcessBuilder pb = new ProcessBuilder("C:\\Program Files (x86)\\VideoLAN\\VLC\\vlc.exe", "--one-instance");
 					vlc = pb.start();
 				} catch (Exception e){
 					String[] info = {e.getMessage()};
 					return new RobotPacket("VLC", "FailedOpen", info);
 				}
+				return this.sucessful(cmd, args);
 			}
-		return null;
+			return this.failed(cmd, args);
 		case("MusicFolder"):
 			File tempDir = new File(args[0]);
-		if(!tempDir.isDirectory()){
-			String[] e = {"NeedLocation", "VLCmusic"};
-			return new RobotPacket("Robot", "BadGetValue", e);		//TODO UPDATE
-		} else {
-			this.vlcFolder = args[0]; //TODO Implement
-		}
-		return this.sucessful(cmd, args);
+			if(!tempDir.isDirectory()){
+				String[] e = {"NeedLocation", "VLCmusic"};
+				return new RobotPacket("Robot", "BadGetValue", e);		//TODO UPDATE
+			} else {
+				this.vlcFolder = args[0]; //TODO Implement
+			}
+			return this.sucessful(cmd, args);
 		case("Next"):
 			return next(cmd, args);
 		case("Prev"):
@@ -226,12 +228,12 @@ public class VLC extends Application{
 	}
 
 	/**
-	 * Method: successful(String cmd, String[] params)
+	 * Method: sucessful(String cmd, String[] params)
 	 * @author Nathan Jackels
 	 * @param cmd The command to be returned within the response packet.
 	 * @param params The parameters to be returned within the response packet.
 	 * @return The response packet that corresponds to cmd and params.
-	 * Description: A helper method to get a response packet that corresponds to cmd and params in the case of a successful execution.
+	 * Description: A helper method to get a response packet that corresponds to cmd and params in the case of a sucessful execution.
 	 */
 	private RobotPacket sucessful(String cmd, String[] params){
 		if(params == null){
