@@ -59,13 +59,13 @@ public class Controller {
 					tts.send(Disp);
 					return GUIDisplay;
 				}
-				return null;
+				//return null;
 			case "FailedOpen":
 					TextToSpeechPacket Disp = new TextToSpeechPacket("the program did not open");
 					GUIPacket GUIDisplay = new GUIPacket("NULL");
 					tts.send(Disp);
 					return GUIDisplay;
-				return null;
+				//return null;
 			case "Display":
 				String[] DisplayStrings = p.getInfo();
 				String returnString = "";
@@ -73,21 +73,21 @@ public class Controller {
 					for (int i = 0; i < DisplayStrings.length; i++){
 						returnString += DisplayStrings[i];
 					}
-					TextToSpeechPacket Disp = new TextToSpeechPacket(DisplayStrings[0]);
-					GUIPacket GUIDisplay = new GUIPacket(returnString);
-					tts.send(Disp);
-					return GUIDisplay;
+					//TextToSpeechPacket Disp = new TextToSpeechPacket(DisplayStrings[0]);
+					//GUIPacket GUIDisplay = new GUIPacket(returnString);
+					//tts.send(Disp);
+					//return GUIDisplay;
 				}
 				return null;
 			case "BadGetValue":
 					//Implement later
 				return null;
 			case "GoodCommand":
-					TextToSpeechPacket Disp = new TextToSpeechPacket("something went wrong");
-					GUIPacket GUIDisplay = new GUIPacket("NULL");
-					tts.send(Disp);
-					return GUIDisplay;
-				return null;
+					//TextToSpeechPacket Disp = new TextToSpeechPacket("something went wrong");
+					//GUIPacket GUIDisplay = new GUIPacket("NULL");
+					//tts.send(Disp);
+					//return GUIDisplay;
+				//return null;
 			case "CommandFailed":
 
 				return null;
@@ -136,8 +136,10 @@ public class Controller {
                 // EDIT 3/1/14 by Stephen J Radachy
                 // added following line:
                 gui.sendDebugText(toDecode);
-		if (p==null) {return null;}
+                //stt.stopRecording();
+		if (p==null) {return;}
 		p = robot.sendPacket(p);
+		/*
 		switch (p.getEvent()){
 			case "BadPacket":
 				if (p.getInfo() == null){
@@ -187,6 +189,6 @@ public class Controller {
 			default:
 			break;
 		}
-		return null;
+		return null;*/
 	}
 }

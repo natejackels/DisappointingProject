@@ -17,13 +17,13 @@ public class TextToSpeech {
 		//Load up the freeTTS voice manager
 		
 		//Start the server for tts
-		Mary mary = new Mary();
+		/*Mary mary = new Mary();
 		try {
 			mary.main(new String[0]);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
+		}*/
 		/*MaryServer server = new MaryServer();
 		server.run();*/
 		//server.run();
@@ -37,7 +37,7 @@ public class TextToSpeech {
 			e.printStackTrace();
 			return;
 		}*/
-		/*
+		
 		String path = System.getProperty("user.dir")+"\\src\\mbrola";
 		System.out.println("Searching " + path + " for voices");
 		System.setProperty("mbrola.base", path);
