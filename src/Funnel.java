@@ -32,6 +32,7 @@ public class Funnel {
 			case "greet":
 				TextToSpeechPacket p = new TextToSpeechPacket("Hello! How are you doing");
 				parent.tts.send(p);
+				return null;
 			case "pause":
 				RobotPacket pauseCmd = new RobotPacket("VLC", "Pause", null);
 				return pauseCmd;
