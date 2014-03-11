@@ -12,9 +12,7 @@ import java.util.Scanner;
  */
 
 public class VLC extends Application{
-	private Process vlc;
 	private Keyboard keyboard;
-	private String vlcFolder;
 
 	/**
 	 * Method: VLC(Robot e, Keyboard k, Mouse m)
@@ -55,7 +53,6 @@ public class VLC extends Application{
 		for (String s : args) {
 			System.out.println("ARgs: " + s);
 		}
-
 		switch(cmd){
 		case("What"):
 			return what();
@@ -68,30 +65,23 @@ public class VLC extends Application{
 					return this.pause(cmd, args);
 				}
 			}
-		return play(cmd, args);
+			return play(cmd, args);
 		case("Pause"):	//DONE
 			return pause(cmd, args);
-		case("ListSongs"):	//TODO Sprint 2
+		case("ListSongs"):
 			if(args.length == 1){
 				return listSongs(cmd, args);
-			} else {
+			} else if(args.length%2 == 1){
 				String[] arg = {args[0]};
 				String[] data = listSongs(cmd, arg).getInfo();
-				this.playParams(cmd, args, data);
+				return playParams(cmd, args, data);
+			} else {
+				//Error
 			}
 		case("Close"):
 			return close(cmd, args);
 		case("Open"):
 			return open(cmd, args);
-		case("MusicFolder"):
-			File tempDir = new File(args[0]);
-		if(!tempDir.isDirectory()){
-			String[] e = {"NeedLocation", "VLCmusic"};
-			return new RobotPacket("Robot", "BadGetValue", e);		//TODO UPDATE
-		} else {
-			this.vlcFolder = args[0]; //TODO Implement
-		}
-		return this.sucessful(cmd, args);
 		case("Next"):
 			return next(cmd, args);
 		case("Prev"):
@@ -105,22 +95,85 @@ public class VLC extends Application{
 		}
 
 	}
-
-	private void playParams(String cmd, String[] args, String[] data) {
+	
+	/**
+	 * Method: playParams(String cmd, String[] args, String[] data)
+	 * @author Nathan Jackels
+	 * @param cmd The command to be returned within the response packet 
+	 * @param args The list of parameters songs have to meet in order to be played
+	 * @param data The compilation of metadata for songs in the folder in question.  
+	 * @return A list of song paths that meet the criteria given in args.
+	 * Description: A method that returns a RobotPacket to be interpreted for playing the songs that meet the required parameters.
+	 */
+	private RobotPacket playParams(String cmd, String[] args, String[] data){
+		if((data == null) ||(data.length%5 != 0)){
+			return this.failed(cmd, args);
+		}
+		ArrayList<String> toPlay = new ArrayList<String>();
 		
+		for(int i = 0; i < (data.length/5); i++){ //For each file in data
+			for(int j = 1; j < args.length; j+=2){ //For each param in args
+				if((args[j] != null) && (args[j+1] != null) && (data[i] != null) &&(data[i+1] != null)){
+					if((args[j].equals("artist")) && (data[i+1].contains(args[j+1]))){
+						toPlay.add(args[0] + data[i]);
+					}
+				} else if ((args[j] != null) && (args[j+1] != null) && (data[i] != null) &&(data[i+2] != null)){
+					if((args[j].equals("song")) && (data[i+2].contains(args[j+1]))){
+						toPlay.add(args[0] + data[i]);
+					}
+				} else if ((args[j] != null) && (args[j+1] != null) && (data[i] != null) &&(data[i+3] != null)){
+					if((args[j].equals("album")) && (data[i+3].contains(args[j+1]))){
+						toPlay.add(args[0] + data[i]);
+					}
+				} else if ((args[j] != null) && (args[j+1] != null) && (data[i] != null) &&(data[i+4] != null)){
+					if((args[j].equals("genre")) && (data[i+3].contains(args[j+1]))){
+						toPlay.add(args[0] + data[i]);
+					}
+				}
+			}
+		}
+		
+		if(toPlay.size() == 0){
+			return this.sucessful(cmd, args);
+		}
+		
+		//Now convert to play command
+		String[] songs = toPlay.toArray(null);
+		RobotPacket playSongs = new RobotPacket("VLC", "Play", songs);
+		return this.interpret(playSongs);
 	}
 
-	private RobotPacket what(){	//TODO JavaDocs
+	/**
+	 * Method: what()
+	 * @author Nathan Jackels
+	 * @return A RobotPacket that returns the commands the user can control VLC with.
+	 * Description: A method that contains a description of what commands the user can control VLC with.
+	 */
+	private RobotPacket what(){
 		String[] canDo = {"The Commands for VLC are" + "Play or Pause", "Play song or artist", "What songs do I have - this will list the songs in your library.", "Open VLC", "Close VLC"};
 		return new RobotPacket("Robot", "Display",canDo);
 	}
-
-	private RobotPacket whatIs(){ //TODO JavaDocs
+	
+	/**
+	 * Method: whatIs()
+	 * @author Nathan Jackels
+	 * @return A RobotPacket that returns a description of what VLC does.
+	 * Description: A method that contains a description of what VLC does.
+	 */
+	private RobotPacket whatIs(){
 		String[] vlcIs = {"VLC is a music and video player.", "Unlike other programs, VLC can play nearly any song or video you have on your computer.", "It can also play DVDs and CDs that you put in your computer."};
 		return new RobotPacket("Robot", "Display", vlcIs);
 	}
-
-	private RobotPacket close(String cmd, String[] args){ //TODO JavaDocs
+	
+	/**
+	 * Method: close(String cmd, String[] args)
+	 * @author Nathan Jackels
+	 * @param cmd The command to be returned within the response packet.
+	 * @param args The arguments to be returned within the response packet.
+	 * @return A RobotPacket that reflects the result of calling this method.
+	 * Description: A method that closes all instances of VLC.
+	 */
+	private RobotPacket close(String cmd, String[] args){
 		try{
 			Runtime.getRuntime().exec("Taskkill /F /IM vlc.exe");
 			return this.sucessful(cmd, args);
@@ -128,9 +181,16 @@ public class VLC extends Application{
 			return this.failed(cmd, args);
 		}
 	}
-
-	//open single file or multiple files or empty playlist
-	private RobotPacket play(String cmd, String[] args){ //TODO JavaDocs
+	
+	/**
+	 * Method: play(String cmd, String[] args)
+	 * @author Nathan Jackels
+	 * @param cmd The command to be returned within the response packet.
+	 * @param args The list of songs to be added to the playlist of VLC.
+	 * @return A RobotPacket that reflects the result of calling this method.
+	 * Descriptions: A method that adds songs to an instance of VLC, or creates it if none are found.
+	 */
+	private RobotPacket play(String cmd, String[] args){
 		if(args == null){
 			args = new String[0];
 		}
@@ -150,7 +210,15 @@ public class VLC extends Application{
 			return new RobotPacket("VLC", "FailedOpen", info);
 		}
 	}
-
+	
+	/**
+	 * Method: listSongs(String cmd, String[] args)
+	 * @author Nathan Jackels
+	 * @param cmd The command to be returned within the response packet.
+	 * @param args The String array that includes the folder location.
+	 * @return A RobotPacket that contains a String array of metadata for files in the folder from args
+	 * Description: A helper method to get the metadata of files within a folder.
+	 */
 	private RobotPacket listSongs(String cmd, String[] args){
 		if((args == null) || (args.length != 1)){
 			return this.failed(cmd, args);
@@ -182,9 +250,15 @@ public class VLC extends Application{
 		RobotPacket songs = new RobotPacket("VLC", "FolderContents", result);
 		return songs;
 	}
-
-
-
+	
+	/**
+	 * Method: open(String cmd, String[] args)
+	 * @author Nathan Jackels
+	 * @param cmd The command to be returned within the response packet.
+	 * @param args The arguments to be returned within the response packet.
+	 * @return A RobotPacket that corresponds to the result of calling this method.
+	 * Description: A method that opens VLC and reports on its success.
+	 */
 	private RobotPacket open(String cmd, String[] args){
 		if(vlcExists()){
 			return this.failed(cmd, args);
@@ -200,7 +274,13 @@ public class VLC extends Application{
 		}
 	}
 
-	private boolean vlcExists(){ //TODO JavaDocs
+	/**
+	 * Method: vlcExists()
+	 * @author Nathan Jackels
+	 * @return Returns true if a process that contains 'vlc.exe' is running, false otherwise.
+	 * Description: A helper method for determining if VLC is already running.
+	 */
+	private boolean vlcExists(){
 		try{
 			String line;
 			Process p = Runtime.getRuntime().exec(System.getenv("windir") + "\\system32\\" + "tasklist.exe");
@@ -328,8 +408,15 @@ public class VLC extends Application{
 		}
 		return new RobotPacket("Robot", "CommandFailed", infoResult);
 	}
-
-	public static Map<String, String> getMediaInfo(File song){
+	
+	/**
+	 * Method: getMediaInfo(File song)
+	 * @author Nathan Jackels
+	 * @param song The song whose metadata will be extracted
+	 * @return A map of the metadata within the song
+	 * Description: A helper method to get the metadata from a song.
+	 */
+	private static Map<String, String> getMediaInfo(File song){
 		{
 			File data = new File("out");
 			if(data.exists()){
@@ -366,34 +453,3 @@ public class VLC extends Application{
 		return result;
 	}
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
