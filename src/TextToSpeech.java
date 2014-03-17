@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 import javax.sound.sampled.AudioInputStream;
@@ -9,12 +11,16 @@ import marytts.util.data.audio.AudioPlayer;
 /*If the above line is giving you an error, that is because
  * you need to add "lib/freetts.jar" to your classpath
  */
-public class TextToSpeech {
+public class TextToSpeech implements Runnable{
 	public Controller parent;
 	private MaryInterface marytts;
+	private String toSay;
+	public boolean enabled = true;
 	
 	public TextToSpeech(Controller w){
 		parent = w;
+		
+		
 		try {
 			marytts = new LocalMaryInterface();
 			Set<String> voices = marytts.getAvailableVoices();
@@ -35,13 +41,17 @@ public class TextToSpeech {
 	 */
 	public void send(TextToSpeechPacket packet) {
 		//Say the message
-		say(packet.getMessage());
+		toSay = packet.getMessage();
+		//Start the thread
+		new Thread(this).start();
 	}
 	
 	/**Say the string that is passed in
 	 * @param s the string to say
 	 */
 	private void say(String s) {
+		//Load this into the list of things to say
+		
 		try {
 			AudioInputStream audio = marytts.generateAudio(s);
 			AudioPlayer player = new AudioPlayer(audio);
@@ -52,6 +62,11 @@ public class TextToSpeech {
 			e.printStackTrace();
 		}
 		
+	}
+	
+	@Override
+	public void run() {
+		say(toSay);
 	}
 	
 }
