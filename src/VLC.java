@@ -12,14 +12,11 @@ import java.util.Scanner;
  */
 
 public class VLC extends Application{
-	private Keyboard keyboard;
 
 	/**
 	 * Method: VLC(Robot e, Keyboard k, Mouse m)
 	 * @author Nathan Jackels
-	 * @param e The reference to the robot class
 	 * @param k The reference to the keyboard class
-	 * @param m The reference to the mouse class
 	 * Description: The constructor for VLC
 	 */
 	public VLC(Keyboard k) {
@@ -50,9 +47,7 @@ public class VLC extends Application{
 	 *	Description: A method that interprets commands for the VLC program and carries them out or delegates them further if necessary.
 	 */
 	private RobotPacket vlc(String cmd, String[] args){
-		for (String s : args) {
-			System.out.println("ARgs: " + s);
-		}
+		System.out.println("Reached VLC");
 		switch(cmd){
 		case("What"):
 			return what();
@@ -380,7 +375,7 @@ public class VLC extends Application{
 			params = new String[0];
 		}
 		String[] infoResult = new String[2 + params.length];
-		infoResult[0] = "Computer";
+		infoResult[0] = "VLC";
 		infoResult[1] = cmd;
 		for(int i = 0; i < params.length; i++){
 			infoResult[i+2] = params[i];
@@ -401,7 +396,7 @@ public class VLC extends Application{
 			params = new String[0];
 		}
 		String[] infoResult = new String[2 + params.length];
-		infoResult[0] = "Computer";
+		infoResult[0] = "VLC";
 		infoResult[1] = cmd;
 		for(int i = 0; i < params.length; i++){
 			infoResult[i+2] = params[i];

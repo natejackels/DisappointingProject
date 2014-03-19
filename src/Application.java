@@ -6,6 +6,7 @@
  */
 public abstract class Application {
 	private String name = "";
+	protected Keyboard keyboard;
 	
 	/**
 	 * Method: Application(String name)
@@ -35,4 +36,14 @@ public abstract class Application {
 	 * Description: An abstract method to ensure all applications can interpret RobotPackets without casting.
 	 */
 	public abstract RobotPacket interpret(RobotPacket e);
+	
+	/**
+	 * Method: setKeyboard(Keyboard k)
+	 * @author Nathan Jackels
+	 * @param k The keyboard for the application
+	 * Description: A method to set the keyboard for the application
+	 */
+	public void setKeyboard(Keyboard k){
+		this.keyboard = k;
+	}
 }
