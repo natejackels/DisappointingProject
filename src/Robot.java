@@ -32,12 +32,15 @@ public class Robot {
 	 *  Description: The method used by Control to delegate work to the Robot class
 	 */
 	public RobotPacket sendPacket(RobotPacket e){
+		System.out.println("Got packet");
 		if((e.getApplication() == null) || (e.getApplication().length() == 0) || (e.getEvent() == null) || (e.getEvent().length() == 0)){
 			return new RobotPacket("Robot", "BadPacket", null);
 		}
 		for(Application app : apps){
-			if(app.getName().equals(e.getApplication())){
+			if(app.getName().toLowerCase().equals(e.getApplication().toLowerCase())){
+				System.out.println("Found an app");
 				return app.interpret(e);
+				
 			}
 		}
 		return new RobotPacket("Robot", "BadPacket", null);

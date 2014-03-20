@@ -1,0 +1,13 @@
+#Comments can be added with a hashtag as the first character
+#Empty lines are ignored
+#Tabs are delimiters
+#command <TAB> Application <TAB> COMMAND <TAB> Arg0 <TAB> Arg1 <TAB>...
+
+#VLC Commands
+open	VLC	Open
+play	VLC	Play	song.mp3
+pause	VLC	Pause
+close	VLC	Close
+what	VLC	What
+whatis	VLC	WhatIs
+next	VLC	Next

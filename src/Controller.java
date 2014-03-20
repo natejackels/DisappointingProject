@@ -45,6 +45,7 @@ public class Controller {
 		RobotPacket p = funnel.decodeVLC(toDecode);
 		if (p==null) {return null;}
 		p = robot.sendPacket(p);
+		System.out.println("Sent");
 		switch (p.getEvent()){
 			case "BadPacket":
 				if (p.getInfo() == null){

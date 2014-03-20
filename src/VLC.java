@@ -36,7 +36,7 @@ public class VLC extends Application{
 	 */
 	@Override
 	public RobotPacket interpret(RobotPacket e){
-		if(e.getApplication() != "VLC"){
+		if(!e.getApplication().toLowerCase().equals("vlc")){
 			return this.failed(e.getEvent(), e.getInfo());
 		}
 		return vlc(e.getEvent(), e.getInfo());
@@ -50,9 +50,7 @@ public class VLC extends Application{
 	 *	Description: A method that interprets commands for the VLC program and carries them out or delegates them further if necessary.
 	 */
 	private RobotPacket vlc(String cmd, String[] args){
-		for (String s : args) {
-			System.out.println("ARgs: " + s);
-		}
+		System.out.println("Passed for loop");
 		switch(cmd){
 		case("What"):
 			return what();
@@ -360,7 +358,9 @@ public class VLC extends Application{
 	 */
 	private RobotPacket pause(String cmd, String[] params){
 		try {
-			Runtime.getRuntime().exec("cmd.exe /C start ./RobotScripts/pause.vbs");
+			String directory = System.getProperty("user.dir");
+			Runtime.getRuntime().exec("cmd.exe /C start " + directory + "\\src\\RobotScripts\\pause.vbs");
+			System.out.println("Success");
 			return sucessful(cmd, params);
 		} catch (IOException e) {
 			return failed(cmd, params);

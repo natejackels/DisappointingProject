@@ -1,3 +1,8 @@
+import java.io.File;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Scanner;
+
 /**
  *  Class: Funnel
  *  @author Robin McNally
@@ -7,9 +12,53 @@
 
 public class Funnel {
 	public Controller parent;
+	private final String saveFile = "funnel.sav";
+	private Map<String,String[]> commandMap;
 	
 	public Funnel(Controller p) {
 		parent = p;
+	
+		commandMap = new HashMap<String,String[]>();
+		
+		try {
+			//Create the save file if it doesnt exist
+			File save = new File(saveFile);
+			if (!save.exists()) {
+				System.out.println("EXTREME ERROR: No funnel.sav found, no commands can be decoded.");
+				save.createNewFile();
+			}
+			
+			//Load the save file
+			Scanner s = new Scanner(save);
+			int command = 0;
+			while (s.hasNext()) {
+				try {
+					command++;
+					String line = s.nextLine();
+					if (line.length() < 1 || line.charAt(0) == '#') { continue; }
+					//Split by tabs
+					String[] exploded = line.split("\t");
+					
+					//Get the key, and value
+					String human = exploded[0].toLowerCase();
+					String[] arguments = new String[exploded.length-1];
+					for (int i = 0; i < exploded.length-1; i++) {
+						arguments[i] = exploded[i+1];
+					}
+					
+					commandMap.put(human, arguments);
+				} catch (Exception e) {
+					System.out.println("Error loading command on line " + command);
+				}
+			}
+			
+			if (command < 10) {
+				System.out.println("Extreme error: Little to no commands were loaded.");
+				System.out.println("Commands may not be understood.  Update funnel.sav");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 	
 	/**
@@ -17,9 +66,38 @@ public class Funnel {
 	 *	@param		toInterpret		The string to transform into a viable RobotPacket
 	 *  @return 					The RobotPacket that details robot's job
 	 */
-	public RobotPacket decodeVLC(String toInterpret){
-		String tempString = toInterpret;
-		switch (tempString){
+	public RobotPacket decodeVLC(String toInterpret) {
+		//Check if this is in the map
+		String[] command = commandMap.get(toInterpret.toLowerCase());
+		if (command == null) {
+			System.out.println("Command not found: " + toInterpret);
+			return null;
+		}
+		
+		//Convert this to a robot packet
+		String[] args = null;
+		if (command.length > 2) {
+			args = new String[command.length-2];
+			for (int i = 0; i < args.length; i++) {
+				args[i] = command[i+2];
+			}
+		}
+		
+		System.out.println("Program: \"" + command[0] + "\"");
+		System.out.println("Command: \"" + command[1] + "\"");
+		
+		if (args != null) {
+			for (int i = 0; i < args.length; i++) {
+				System.out.println("Arg[" + i + "]: " + args[i]);
+			}
+		} else {
+			System.out.println("Args is null");
+		}
+		
+		RobotPacket packet = new RobotPacket(command[0],command[1],args);
+		return packet;
+		/*
+		switch (toInterpret){
 			case "open vlc":
 				RobotPacket openCmd = new RobotPacket("VLC", "Open", null);
 				return openCmd;
@@ -56,8 +134,7 @@ public class Funnel {
 					return alternatePlay;
 				}
 			break;
-		}
-		return null;
+		}*/
 	}
 
 
