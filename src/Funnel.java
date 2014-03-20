@@ -71,6 +71,10 @@ public class Funnel {
 		String[] command = commandMap.get(toInterpret.toLowerCase());
 		if (command == null) {
 			System.out.println("Command not found: " + toInterpret);
+			System.out.println("Available Commands:");
+			for (String s : commandMap.keySet()) {
+				System.out.println(" " + s);
+			}
 			return null;
 		}
 		
