@@ -51,6 +51,10 @@ public class Funnel {
 					System.out.println("Error loading command on line " + command);
 				}
 			}
+			System.out.println("Available Commands:");
+			for (String sss : commandMap.keySet()) {
+				System.out.println(" " + sss);
+			}
 			
 			if (command < 10) {
 				System.out.println("Extreme error: Little to no commands were loaded.");
@@ -71,10 +75,6 @@ public class Funnel {
 		String[] command = commandMap.get(toInterpret.toLowerCase());
 		if (command == null) {
 			System.out.println("Command not found: " + toInterpret);
-			System.out.println("Available Commands:");
-			for (String s : commandMap.keySet()) {
-				System.out.println(" " + s);
-			}
 			return null;
 		}
 		
