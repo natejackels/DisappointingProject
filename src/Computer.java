@@ -6,7 +6,6 @@ import java.io.IOException;
  * The class that runs the vbs scripts in /RobotScripts/
  */
 public class Computer extends Application {
-	private Keyboard keyboard;
 	
 	/**
 	 * Method: Computer(Keyboard keyboard)
@@ -63,6 +62,10 @@ public class Computer extends Application {
 			} catch (IOException e) {
 				return failed(cmd, params);
 			}
+		case("SelectAll"):
+			keyboard.releaseAll();
+			keyboard.ctrlCMD(java.awt.event.KeyEvent.VK_A);
+			return sucessful(cmd, params);
 		default:
 			String[] info = {"InvalidCommand", "Computer"};
 			return new RobotPacket("Robot", "BadPacket", info);

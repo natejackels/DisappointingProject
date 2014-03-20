@@ -1,9 +1,9 @@
 
 public class PhotoViewer extends Application{
 
-	public PhotoViewer() {
+	public PhotoViewer(Keyboard k) {
 		super("PhotoViewer");
-		// TODO Auto-generated constructor stub
+		this.keyboard = k;
 	}
 
 	@Override

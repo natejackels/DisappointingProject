@@ -18,9 +18,14 @@ public class Robot {
 		//TODO Create Programs and Classes
 		this.control = control;
 		this.keyboard = new Keyboard();
+		if(keyboard.getKeyboard() == null){
+			this.keyboard = null;
+		}
 		apps = new Application[2];
 		apps[0] = new VLC(keyboard);
 		apps[1] = new Computer(keyboard);
+		apps[2] = new Chrome(keyboard);
+		apps[3] = new PhotoViewer(keyboard);
 	}
 	
 	/**
@@ -36,6 +41,24 @@ public class Robot {
 		if((e.getApplication() == null) || (e.getApplication().length() == 0) || (e.getEvent() == null) || (e.getEvent().length() == 0)){
 			return new RobotPacket("Robot", "BadPacket", null);
 		}
+		
+		if(this.keyboard == null){
+			this.keyboard = new Keyboard();
+			if(this.keyboard == null){
+				String[] infos = new String[e.getInfo().length + 2];
+				infos[0] = e.getApplication();
+				infos[1] = e.getEvent();
+				for(int i = 0; i < e.getInfo().length; i++){
+					infos[2+i] = e.getInfo()[i];
+				}
+				return new RobotPacket("Robot", "CommandFailed", infos);
+			} else {
+				for(Application t : apps){
+					t.setKeyboard(this.keyboard);
+				}
+			}
+		}
+		
 		for(Application app : apps){
 			if(app.getName().toLowerCase().equals(e.getApplication().toLowerCase())){
 				System.out.println("Found an app");
