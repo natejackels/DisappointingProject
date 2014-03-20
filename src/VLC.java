@@ -47,11 +47,8 @@ public class VLC extends Application{
 	 *	Description: A method that interprets commands for the VLC program and carries them out or delegates them further if necessary.
 	 */
 	private RobotPacket vlc(String cmd, String[] args){
-<<<<<<< HEAD
 		System.out.println("Passed for loop");
-=======
 		System.out.println("Reached VLC");
->>>>>>> d006d659eacdcbaa56506ee287c0bb21a646dee0
 		switch(cmd){
 		case("What"):
 			return what();
