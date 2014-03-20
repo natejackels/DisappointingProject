@@ -21,7 +21,7 @@ public class Robot {
 		if(keyboard.getKeyboard() == null){
 			this.keyboard = null;
 		}
-		apps = new Application[2];
+		apps = new Application[4];
 		apps[0] = new VLC(keyboard);
 		apps[1] = new Computer(keyboard);
 		apps[2] = new Chrome(keyboard);
