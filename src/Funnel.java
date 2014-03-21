@@ -25,10 +25,17 @@ public class Funnel {
 	private final String saveFile = "funnel.sav";
 	private Map<String,String[]> commandMap;
 	private boolean debugMode = false;
+	private MaxentTagger tagger;
 	
 	public Funnel(Controller p) {
 		parent = p;
 	
+		//Stanford tagger
+		String directory = System.getProperty("user.dir");
+		String taggerModel = directory + "\\src\\lib\\english-bidirectional-distsim.tagger";
+		System.out.println(taggerModel);
+		tagger = new MaxentTagger(taggerModel);
+		
 		commandMap = new HashMap<String,String[]>();
 		
 		try {
@@ -90,6 +97,20 @@ public class Funnel {
 		}
 	}
 	
+	/**Convert a raw string into a string that can be interpreted
+	 * by funnel
+	 * @param raw Text, that comes from a human mouth
+	 * @return a command that can be used with funnel.sav
+	 */
+	private String convertToCommand(String raw) {
+		String tagged = tagger.tagString(raw);
+		if (debugMode) {
+			System.out.println("Raw Input:    " + raw);
+			System.out.println("Tagged Input: " + tagged);
+		}
+		return tagged;
+	}
+	
 	/**
 	 *  This method decodes a string into a packet readable by RobotPacket
 	 *	@param		toInterpret		The string to transform into a viable RobotPacket
@@ -100,6 +121,8 @@ public class Funnel {
 			toggleDebugMode();
 			return null;
 		}
+		
+		toInterpret = convertToCommand(toInterpret);
 		
 		//Check if this is in the map
 		String[] command = commandMap.get(toInterpret.toLowerCase());
