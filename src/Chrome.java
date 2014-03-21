@@ -28,10 +28,12 @@ public class Chrome extends Application {
 	 */
 	@Override
 	public RobotPacket interpret(RobotPacket e) {
+		System.out.println(e.getEvent());
 		switch(e.getEvent()){
 		case("History"):
 			return history(e.getEvent(), e.getInfo());
 		default:
+			System.out.println("Invalid Command");
 			String[] info = {"Invalid Command", "Chrome"};
 			return new RobotPacket("Robot", "BadPacket", info);
 		}
@@ -46,17 +48,23 @@ public class Chrome extends Application {
 	 * Description: A method that will search Chrome's history for a string
 	 */
 	private RobotPacket history(String cmd, String[] args) {
+		System.out.println("History!");
 		if((args == null) || (args.length == 0)){
 			return this.failed(cmd, args);
 		}
-		String history = "chrome://history/";
-		ProcessBuilder pb = new ProcessBuilder("C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe", history);
+		String history = "chrome%3A//history/";
+		history = "";
+		System.out.println(history);
+		ProcessBuilder pb = new ProcessBuilder("C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe");//, history);
 		try{
 			pb.start();
 		} catch (IOException e){
 			return this.failed(cmd, args);
 		}
 		//Type string.
+		keyboard.delay(2000);
+		keyboard.ctrlCMD(java.awt.event.KeyEvent.VK_H);
+		keyboard.delay(3000);
 		keyboard.typeString(args[0]);
 		keyboard.pressEnter();
 		return this.sucessful(cmd, args);

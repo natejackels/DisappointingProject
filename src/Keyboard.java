@@ -52,7 +52,7 @@ public class Keyboard {
 	 * Description: A method that releases all the keys that are currently pressed down by Keyboard.
 	 */
 	public void releaseKeys(){
-		for(int e : pressedKeys){
+		for(Integer e : pressedKeys){
 			keyboard.keyRelease(e);
 			pressedKeys.remove(e);
 		}
