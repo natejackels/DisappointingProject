@@ -9,11 +9,22 @@ import java.util.Scanner;
  *  Description: This class funnels the text or speech string into comprehensible commands
  *
  */
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.util.ArrayList;
+import java.util.List;
+
+import edu.stanford.nlp.ling.Sentence;
+import edu.stanford.nlp.ling.TaggedWord;
+import edu.stanford.nlp.ling.HasWord;
+import edu.stanford.nlp.tagger.maxent.MaxentTagger;
+
 
 public class Funnel {
 	public Controller parent;
 	private final String saveFile = "funnel.sav";
 	private Map<String,String[]> commandMap;
+	private boolean debugMode = false;
 	
 	public Funnel(Controller p) {
 		parent = p;
@@ -51,10 +62,6 @@ public class Funnel {
 					System.out.println("Error loading command on line " + command);
 				}
 			}
-			System.out.println("Available Commands:");
-			for (String sss : commandMap.keySet()) {
-				System.out.println(" " + sss);
-			}
 			
 			if (command < 10) {
 				System.out.println("Extreme error: Little to no commands were loaded.");
@@ -65,16 +72,43 @@ public class Funnel {
 		}
 	}
 	
+	public void turnDebugMessagesOn() {
+		debugMode = true;
+		System.out.println("Debug mode turned ON");
+	}
+	
+	public void turnDebugMessagesOff(){
+		debugMode = false;
+		System.out.println("Debug mode turned OFF");
+	}
+	
+	public void toggleDebugMode() {
+		if (debugMode) {
+			turnDebugMessagesOff();
+		} else {
+			turnDebugMessagesOn();
+		}
+	}
+	
 	/**
 	 *  This method decodes a string into a packet readable by RobotPacket
 	 *	@param		toInterpret		The string to transform into a viable RobotPacket
 	 *  @return 					The RobotPacket that details robot's job
 	 */
 	public RobotPacket decodeVLC(String toInterpret) {
+		if (toInterpret.toLowerCase().equals("debug")) {
+			toggleDebugMode();
+			return null;
+		}
+		
 		//Check if this is in the map
 		String[] command = commandMap.get(toInterpret.toLowerCase());
 		if (command == null) {
 			System.out.println("Command not found: " + toInterpret);
+			System.out.println("Available Commands:");
+			for (String sss : commandMap.keySet()) {
+				System.out.println(" " + sss);
+			}
 			return null;
 		}
 		
@@ -87,15 +121,17 @@ public class Funnel {
 			}
 		}
 		
-		System.out.println("Program: \"" + command[0] + "\"");
-		System.out.println("Command: \"" + command[1] + "\"");
-		
-		if (args != null) {
-			for (int i = 0; i < args.length; i++) {
-				System.out.println("Arg[" + i + "]: " + args[i]);
+		if (debugMode) {
+			System.out.println("Program: \"" + command[0] + "\"");
+			System.out.println("Command: \"" + command[1] + "\"");
+
+			if (args != null) {
+				for (int i = 0; i < args.length; i++) {
+					System.out.println("Arg[" + i + "]: " + args[i]);
+				}
+			} else {
+				System.out.println("Args is null");
 			}
-		} else {
-			System.out.println("Args is null");
 		}
 		
 		RobotPacket packet = new RobotPacket(command[0],command[1],args);
