@@ -190,7 +190,7 @@ public class VLC extends Application{
 		if(args == null){
 			args = new String[0];
 		}
-		String[] vlcparams = new String[args.length + 5];
+		String[] vlcparams = new String[args.length + 4];
 		vlcparams[0] = "C:\\Program Files (x86)\\VideoLAN\\VLC\\vlc.exe";
 		for(int i = 0; i < args.length; i++){
 			vlcparams[i+1] = args[i];
@@ -198,7 +198,6 @@ public class VLC extends Application{
 		vlcparams[args.length+1] = "--one-instance";
 		vlcparams[args.length+2] = "--global-key-play-pause";
 		vlcparams[args.length+3] = "\"Media Play Pause\"";
-		vlcparams[args.length+4] = "--playlist-enqueue";
 		ProcessBuilder pb = new ProcessBuilder(vlcparams);
 		try{
 			pb.start();
