@@ -27,6 +27,61 @@ public class Funnel {
 	private boolean debugMode = false;
 	private MaxentTagger tagger;
 	
+	/*Stanford POS tagger
+	 * 
+
+        CC Coordinating conjunction
+        CD Cardinal number
+        DT Determiner
+        EX Existential there
+        FW Foreign word
+        IN Preposition or subordinating conjunction
+        JJ Adjective
+        JJR Adjective, comparative
+        JJS Adjective, superlative
+        LS List item marker
+        MD Modal
+        NN Noun, singular or mass
+        NNS Noun, plural
+        NNP Proper noun, singular
+        NNPS Proper noun, plural
+        PDT Predeterminer
+        POS Possessive ending
+        PRP Personal pronoun
+        PRP$ Possessive pronoun
+        RB Adverb
+        RBR Adverb, comparative
+        RBS Adverb, superlative
+        RP Particle
+        SYM Symbol
+        TO to
+        UH Interjection
+        VB Verb, base form
+        VBD Verb, past tense
+        VBG Verb, gerund or present participle
+        VBN Verb, past participle
+        VBP Verb, non­3rd person singular present
+        VBZ Verb, 3rd person singular present
+        WDT Wh­determiner
+        WP Wh­pronoun
+        WP$ Possessive wh­pronoun
+        WRB Wh­adverb
+        
+        
+        WHAT SHREYA SAID ABOUT TESTING
+        Strategy - Not just clicking around
+        	usablility
+        		what are you testing 
+        		who is your user
+        		what did they do / how did they do for asked tasks
+        Description of how tests are conducted and what came out of it
+        	Actual script of what was said (For sprint 3)
+        	Sprint 2: Just a paraphrased version
+        	
+       	Testing in sprint 2: MORE THAN 50% OF GRADE!!!
+        
+	 */
+	
 	public Funnel(Controller p) {
 		parent = p;
 	
@@ -104,11 +159,44 @@ public class Funnel {
 	 */
 	private String convertToCommand(String raw) {
 		String tagged = tagger.tagString(raw);
+		
 		if (debugMode) {
-			System.out.println("Raw Input:    " + raw);
-			System.out.println("Tagged Input: " + tagged);
+			System.out.println(tagged);
 		}
-		return tagged;
+		
+		ArrayList<String> verbs = new ArrayList<String>();
+		ArrayList<String> subjects = new ArrayList<String>();
+		ArrayList<String> prepositions = new ArrayList<String>();
+		
+		//Split the tagged string into words
+		String[] split = tagged.split(" ");
+		
+		for (String s : split) {
+			//Add it to the verbs list if it is a verb
+			String[] parts = s.split("_");
+			String tag = parts[parts.length-1].toUpperCase();
+			String word = parts[0];
+			if (tag.equals("VB")) {
+				verbs.add(word);
+			} else if (tag.equals("PRP")) {
+				prepositions.add(word);
+			}
+		}
+		
+		if (debugMode) {
+			System.out.println("Possible commands: ");
+			for (String s : verbs) {
+				System.out.println("-" + s);
+			}
+		}
+		
+		
+		
+		
+		if (verbs.size() > 0) {
+			return verbs.get(0);
+		}
+		return "";
 	}
 	
 	/**
@@ -120,6 +208,10 @@ public class Funnel {
 		if (toInterpret.toLowerCase().equals("debug")) {
 			toggleDebugMode();
 			return null;
+		}
+		
+		if (debugMode) {
+			System.out.println("Trying command: " + toInterpret);
 		}
 		
 		toInterpret = convertToCommand(toInterpret);
