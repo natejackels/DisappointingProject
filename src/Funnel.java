@@ -180,7 +180,22 @@ public class Funnel {
 				verbs.add(word);
 			} else if (tag.equals("PRP")) {
 				prepositions.add(word);
+			} else if (tag.equals("NN")) {
+				subjects.add(word);
 			}
+		}
+		
+		System.out.println("Verbs:");
+		for (String v : verbs) {
+			System.out.println("-" + v);
+		}
+		System.out.println("Subjects:");
+		for (String s : subjects) {
+			System.out.println("-" + s);
+		}
+		System.out.println("Prepositions:");
+		for (String p : prepositions) {
+			System.out.println("-" + p);
 		}
 		
 		if (debugMode) {
@@ -190,12 +205,20 @@ public class Funnel {
 			}
 		}
 		
-		
-		
-		
-		if (verbs.size() > 0) {
-			return verbs.get(0);
+		/*Check each of the verbs to see if one matches a command*/
+		for (String v : verbs) {
+			if (debugMode) {
+				System.out.println("Attempting command: " + v);
+			}
+			if (commandMap.get(v)!=null) {
+				//Everything after the verb is the arguments
+				raw = raw.toLowerCase();
+				int verbindex = raw.indexOf(v)+v.length();
+				return v;// + raw.substring(verbindex);
+			}
 		}
+		
+		
 		return "";
 	}
 	
@@ -210,14 +233,32 @@ public class Funnel {
 			return null;
 		}
 		
+		if  (toInterpret.contains("search")) {
+			//If "for" comes after search, remove it
+			toInterpret = toInterpret.replace("search for", "");
+			toInterpret = toInterpret.replace("search","");
+			String[] arg = new String[1];
+			arg[0] = toInterpret;
+			RobotPacket packet = new RobotPacket("chrome","search",arg);
+			return packet;
+		}
+		
 		if (debugMode) {
 			System.out.println("Trying command: " + toInterpret);
 		}
 		
 		toInterpret = convertToCommand(toInterpret);
+		String[] splitInterpret = toInterpret.split(" ");
+		String action = splitInterpret[0];
+		String[] arguments = new String[splitInterpret.length-1];
+		for (int i = 1; i < splitInterpret.length; i++) {
+			arguments[i] = splitInterpret[i+1];
+		}
 		
+		
+		/*TODO FINISH PARSING ARGUMETNS LIKE PLAY AND FIND*/
 		//Check if this is in the map
-		String[] command = commandMap.get(toInterpret.toLowerCase());
+		String[] command = commandMap.get(action.toLowerCase());
 		if (command == null) {
 			System.out.println("Command not found: " + toInterpret);
 			System.out.println("Available Commands:");
@@ -251,45 +292,6 @@ public class Funnel {
 		
 		RobotPacket packet = new RobotPacket(command[0],command[1],args);
 		return packet;
-		/*
-		switch (toInterpret){
-			case "open vlc":
-				RobotPacket openCmd = new RobotPacket("VLC", "Open", null);
-				return openCmd;
-			case "close vlc":
-				RobotPacket closeCmd = new RobotPacket("VLC", "Close", null);
-				return closeCmd;
-			case "play":
-				RobotPacket playCmd = new RobotPacket("VLC", "Play", null);
-				return playCmd;
-			case "greet":
-				TextToSpeechPacket p = new TextToSpeechPacket("Hello! How are you doing");
-				parent.tts.send(p);
-				return null;
-			case "pause":
-				RobotPacket pauseCmd = new RobotPacket("VLC", "Pause", null);
-				return pauseCmd;
-			case "what can i do?":
-				RobotPacket whatCmd = new RobotPacket("VLC", "What", null);
-				return whatCmd;
-			case "what is vlc":
-				RobotPacket whatelseCmd = new RobotPacket("VLC", "WhatIs", null);
-				return whatelseCmd;
-			case "next":
-				RobotPacket nextCmd = new RobotPacket("VLC", "Next", null);
-				return nextCmd;
-			case "prev":
-				RobotPacket	prevCmd = new RobotPacket("VLC", "Next", null);
-			default:
-				if (tempString.contains("play")){
-					tempString = tempString.substring(5);
-					String[] sent = new String[1];
-					sent[0] = tempString;
-					RobotPacket alternatePlay = new RobotPacket("VLC", "Play", sent);
-					return alternatePlay;
-				}
-			break;
-		}*/
 	}
 
 
