@@ -24,7 +24,7 @@ public class Funnel {
 	public Controller parent;
 	private final String saveFile = "funnel.sav";
 	private Map<String,String[]> commandMap;
-	private boolean debugMode = false;
+	private boolean debugMode = true;
 	private MaxentTagger tagger;
 	
 	/*Stanford POS tagger
@@ -60,12 +60,12 @@ public class Funnel {
         VBD Verb, past tense
         VBG Verb, gerund or present participle
         VBN Verb, past participle
-        VBP Verb, non­3rd person singular present
+        VBP Verb, nonï¿½3rd person singular present
         VBZ Verb, 3rd person singular present
-        WDT Wh­determiner
-        WP Wh­pronoun
-        WP$ Possessive wh­pronoun
-        WRB Wh­adverb
+        WDT Whï¿½determiner
+        WP Whï¿½pronoun
+        WP$ Possessive whï¿½pronoun
+        WRB Whï¿½adverb
         
         
         WHAT SHREYA SAID ABOUT TESTING
@@ -189,7 +189,6 @@ public class Funnel {
 				System.out.println("-" + s);
 			}
 		}
-		
 		
 		
 		

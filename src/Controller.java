@@ -14,6 +14,9 @@ public class Controller {
 	public GUI gui;
 	public Robot robot;
 	public Funnel funnel;
+        // this swaps between the old and new UI implementation.
+        private boolean newui = true;
+        private UX ux;
 	
 	public static void main(String[] args) {
 		//Create the wrapper (Main program) object
@@ -27,7 +30,12 @@ public class Controller {
 		stt = new SpeechToText(this);
                 // EDIT 3/1/14 by Stephen J Radachy
                 // moved startRecording to gui
-		gui = new GUI(this);
+		if (!newui){
+                gui = new GUI(this);
+                } else {
+                ux = new UX();
+                stt.startRecording();
+                }
 		robot = new Robot(this);
 		funnel = new Funnel(this);
 	}
@@ -136,7 +144,11 @@ public class Controller {
 		RobotPacket p = funnel.decodeVLC(toDecode);
                 // EDIT 3/1/14 by Stephen J Radachy
                 // added following line:
+                if (!newui){
                 gui.sendDebugText(toDecode);
+                } else {
+                    ux.setInputText(toDecode);
+                }
                 //stt.stopRecording();
 		if (p==null) {return;}
 		p = robot.sendPacket(p);
