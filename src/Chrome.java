@@ -72,8 +72,42 @@ public class Chrome extends Application {
 			} else {
 				return this.failed(cmd, args);
 			}
-		//case(""):
-			
+		case("Youtube"):
+			if(openURL("http://www.youtube.com/results?search_query=" + parsedTerm + "&sm=")){
+				return this.sucessful(cmd,  args);
+			} else {
+				return this.failed(cmd, args);
+			}
+		case("Wikipedia"):
+			if(openURL("http://en.wikipedia.org/w/index.php?search=" + parsedTerm + "&title=Special%3ASearch&go=Go")){
+				return this.sucessful(cmd, args);
+			} else {
+				return this.failed(cmd, args);
+			}
+		case("GoogleNews"):
+			if(openURL("http://www.google.com/search?hl=en&gl=us&tbm=nws&authuser=0&q=" + parsedTerm + "&oq=&gs_l=")){
+				return this.sucessful(cmd, args);
+			} else {
+				return this.failed(cmd, args);
+			}
+		case("YahooNews"):
+			if(openURL("https://search.yahoo.com/search;_ylt=Ao9LigmTGtI7b3egIYiJ..is0NUE;_ylu=X3oDMTByaTN1NDdhBHNlYwNVSCAzIERlc2t0b3AgU2VhcmNoIDEwMA--;_ylg=X3oDMTBsdWsyY2FpBGxhbmcDZW4tVVMEcHQDMgR0ZXN0Aw--;_ylv=3?p=" + parsedTerm + "&type=2button&fr=uh3_news_web_gs")){
+				return this.sucessful(cmd, args);
+			} else {
+				return this.failed(cmd, args);
+			}
+		case("MSNNews"):
+			if(openURL("http://news.msn.com/searchresults?q=" + parsedTerm + "&form=MSNNWS&mkt=en-us&scope=")){
+				return this.sucessful(cmd, args);
+			} else {
+				return this.failed(cmd, args);
+			}
+		case("CNN"):
+			if(openURL("http://www.cnn.com/search/?query=" + parsedTerm + "&primaryType=mixed&sortBy=relevance&intl=false&x=0&y=0")){
+				return this.sucessful(cmd, args);
+			} else {
+				return this.failed(cmd, args);
+			}			
 		default:
 			return this.failed(cmd, args);
 		}
@@ -100,8 +134,29 @@ public class Chrome extends Application {
 				case('*'): result += "%2A"; break;
 				case('+'): result += "%2B"; break;
 				case(','): result += "%2C"; break;
+				case('-'): result += "%2D"; break;
+				case('.'): result += "%2E"; break;
+				case('/'): result += "%2F"; break;
+				case(':'): result += "%3A"; break;
+				case(';'): result += "%3B"; break;
+				case('<'): result += "%3C"; break;
+				case('='): result += "%3D"; break;
+				case('>'): result += "%3E"; break;
+				case('?'): result += "%3F"; break;
+				case('@'): result += "%40"; break;
+				case('['): result += "%5B"; break;
+				case('\\'): result += "%5C"; break;
+				case(']'): result += "%5D"; break;
+				case('^'): result += "%5E"; break;
+				case('_'): result += "%5F"; break;
+				case('`'): result += "%60"; break;
+				case('{'): result += "%7B"; break;
+				case('|'): result += "%7C"; break;
+				case('}'): result += "%7D"; break;
+				case('~'): result += "%7E"; break;
+				
 				default:
-					System.out.println("###Character not supported###");
+					System.out.println("###Character not supported:[" + t + "]###");
 				}
 			}
 		}
