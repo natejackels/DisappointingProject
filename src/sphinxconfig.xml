@@ -135,11 +135,11 @@
     <!-- The Dictionary configuration                            -->
     <!-- ******************************************************** -->
     <component name="dictionary" 
-        type="edu.cmu.sphinx.linguist.dictionary.FastDictionary">
+        type="edu.cmu.sphinx.linguist.dictionary.MappingDictionary">
         <property name="dictionaryPath"
                   value="resource:/sphinxdictionary.txt"/>
         <property name="fillerPath" 
-	          value="resource:/WSJ_8gau_13dCep_16k_40mel_130Hz_6800Hz/noisedict"/>
+	          value="resource:/sphinxfiller.txt"/>
         <property name="addSilEndingPronunciation" value="false"/>
         <property name="wordReplacement" value="&lt;sil&gt;"/>
         <property name="unitManager" value="unitManager"/>
@@ -148,16 +148,16 @@
     
 
     <!-- ******************************************************** -->
-    <!-- The Language Model configuration //edu.cmu.sphinx.linguist.language.ngram.large.LargeNGramModel                        -->
+    <!-- The Language Model configuration edu.cmu.sphinx.linguist.language.ngram.SimpleNGramModel //edu.cmu.sphinx.linguist.language.ngram.large.LargeNGramModel                        -->
     <!-- ******************************************************** -->
     <component name="trigramModel" 
-        type="edu.cmu.sphinx.linguist.language.ngram.SimpleNGramModel">
+        type="edu.cmu.sphinx.linguist.language.ngram.large.LargeTrigramModel">
         <property name="location" 
-            value="resource:/sphinxlanguagemodel.txt"/>
+            value="resource:/languagemodel.dmp"/>
         <property name="logMath" value="logMath"/>
         <property name="dictionary" value="dictionary"/>
         <property name="maxDepth" value="3"/>
-        <property name="unigramWeight" value=".7"/>
+        <property name="unigramWeight" value="1.0"/>
     </component>
     
     

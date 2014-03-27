@@ -1,0 +1,4 @@
+<S>	SIL
+</S>	SIL
+<SIL>	SIL
+<UNK>   SIL
