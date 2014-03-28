@@ -238,9 +238,10 @@ public class Funnel {
 			//If "for" comes after search, remove it
 			toInterpret = toInterpret.replace("search for", "");
 			toInterpret = toInterpret.replace("search","");
-			String[] arg = new String[1];
-			arg[0] = toInterpret;
-			RobotPacket packet = new RobotPacket("chrome","search",arg);
+			String[] arg = new String[2];
+			arg[0] = "Wikipedia";
+			arg[1] = toInterpret;
+			RobotPacket packet = new RobotPacket("Chrome","Search",arg);
 			return packet;
 		}
 		

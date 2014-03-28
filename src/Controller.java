@@ -15,7 +15,7 @@ public class Controller {
 	public Robot robot;
 	public Funnel funnel;
         // this swaps between the old and new UI implementation.
-        private boolean newui = true;
+        private boolean newui = false;//true;
         private UX ux;
 	
 	public static void main(String[] args) {
