@@ -1,7 +1,12 @@
 # Java #
 *.class
 build/
-
+dist/
+log/
+test/
+nbproject/
+build.xml
+manifest.mf
 
 # OS #
 .DS_Store
