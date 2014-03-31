@@ -1,13 +1,8 @@
 /**
- *	Class: Control
+ *	Class: Controller
  *	@author Robin McNally
  *	Description: This class handles the communication between the four other parts of the program
  */
-/*
-	TODO -> Implement main
-	TODO -> Keep track of active program
-	TODO -> keep track of the settings of the system
-*/
 public class Controller {
 	public TextToSpeech tts;
 	public SpeechToText stt;
@@ -25,11 +20,10 @@ public class Controller {
 		//Start the code
 		controller.initialize();
 	}
+	
 	public void initialize() {
 		tts = new TextToSpeech(this);
 		stt = new SpeechToText(this,true);
-                // EDIT 3/1/14 by Stephen J Radachy
-                // moved startRecording to gui
 		if (!newui){
                 gui = new GUI(this);
                 } else {
@@ -68,13 +62,11 @@ public class Controller {
 					tts.send(Disp);
 					return GUIDisplay;
 				}
-				//return null;
 			case "FailedOpen":
 					TextToSpeechPacket Disp = new TextToSpeechPacket("the program did not open");
 					GUIPacket GUIDisplay = new GUIPacket("NULL");
 					tts.send(Disp);
 					return GUIDisplay;
-				//return null;
 			case "Display":
 				String[] DisplayStrings = p.getInfo();
 				String returnString = "";
@@ -82,23 +74,14 @@ public class Controller {
 					for (int i = 0; i < DisplayStrings.length; i++){
 						returnString += DisplayStrings[i];
 					}
-					//TextToSpeechPacket Disp = new TextToSpeechPacket(DisplayStrings[0]);
-					//GUIPacket GUIDisplay = new GUIPacket(returnString);
-					//tts.send(Disp);
-					//return GUIDisplay;
 				}
 				return null;
 			case "BadGetValue":
 					//Implement later
 				return null;
 			case "GoodCommand":
-					//TextToSpeechPacket Disp = new TextToSpeechPacket("something went wrong");
-					//GUIPacket GUIDisplay = new GUIPacket("NULL");
-					//tts.send(Disp);
-					//return GUIDisplay;
-				//return null;
+				return null;
 			case "CommandFailed":
-
 				return null;
 			default:
 			break;
@@ -121,8 +104,6 @@ public class Controller {
 		TODO -> Bad Get Value
 	*/
 	public void sendPacket(RobotPacket rPack){
-		//Not much happens here
-		//Error handling will pick up after demo
 	}
 
 	/**
@@ -131,7 +112,6 @@ public class Controller {
 	 *	@param gPack Takes a tts packet and decides what class to send it to
 	 */
 	public void sendPacket(TextToSpeechPacket tsPack){
-		//Not much will happen here
 	}
 
 	/**
@@ -142,8 +122,6 @@ public class Controller {
 	public void sendPacket(STTPacket stPack){
 		String toDecode = stPack.getText();
 		RobotPacket p = funnel.decodeVLC(toDecode);
-                // EDIT 3/1/14 by Stephen J Radachy
-                // added following line:
                 if (!newui){
                 gui.sendDebugText(toDecode);
                 } else {
@@ -152,56 +130,5 @@ public class Controller {
                 //stt.stopRecording();
 		if (p==null) {return;}
 		p = robot.sendPacket(p);
-		/*
-		switch (p.getEvent()){
-			case "BadPacket":
-				if (p.getInfo() == null){
-					TextToSpeechPacket Disp = new TextToSpeechPacket("I'm sorry we don't support a program that does that job");
-					GUIPacket GUIDisplay = new GUIPacket("NULL");
-					tts.send(Disp);
-					return GUIDisplay;
-				} else {
-					//More complex improper command to come during the second sprint
-					TextToSpeechPacket Disp = new TextToSpeechPacket("I didn't understand you");
-					GUIPacket GUIDisplay = new GUIPacket("NULL");
-					tts.send(Disp);
-					return GUIDisplay;
-				}
-				return null;
-			case "FailedOpen":
-					TextToSpeechPacket Disp = new TextToSpeechPacket("the program did not open");
-					GUIPacket GUIDisplay = new GUIPacket("NULL");
-					tts.send(Disp);
-					return GUIDisplay;
-				return null;
-			case "Display":
-				String[] DisplayStrings = p.getInfo();
-				String returnString = "";
-				if (p != null){
-					for (int i = 0; i < DisplayStrings.length; i++){
-						returnString += DisplayStrings[i];
-					}
-					TextToSpeechPacket Disp = new TextToSpeechPacket(DisplayStrings[0]);
-					GUIPacket GUIDisplay = new GUIPacket(returnString);
-					tts.send(Disp);
-					return GUIDisplay;
-				}
-				return null;
-			case "BadGetValue":
-					//Implement later
-				return null;
-			case "GoodCommand":
-					TextToSpeechPacket Disp = new TextToSpeechPacket("something went wrong");
-					GUIPacket GUIDisplay = new GUIPacket("NULL");
-					tts.send(Disp);
-					return GUIDisplay;
-				return null;
-			case "CommandFailed":
-
-				return null;
-			default:
-			break;
-		}
-		return null;*/
 	}
 }
