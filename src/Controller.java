@@ -132,12 +132,12 @@ public class Controller {
 					//More complex improper command to come during the second sprint
 					Disp = new TextToSpeechPacket("I didn't understand you");
 					tts.send(Disp);
-					return GUIDisplay;
+					return;
 				}
 			case "FailedOpen":
 					Disp = new TextToSpeechPacket("the program did not open");
 					tts.send(Disp);
-					return GUIDisplay;
+					return;
 			case "Display":
 			default:
 			break;
