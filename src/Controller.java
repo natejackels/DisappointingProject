@@ -27,7 +27,7 @@ public class Controller {
 	}
 	public void initialize() {
 		tts = new TextToSpeech(this);
-		stt = new SpeechToText(this);
+		stt = new SpeechToText(this,true);
                 // EDIT 3/1/14 by Stephen J Radachy
                 // moved startRecording to gui
 		if (!newui){

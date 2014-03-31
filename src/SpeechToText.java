@@ -50,10 +50,14 @@ public class SpeechToText {
      * @param w a reference to the parent controller
      * @author Stephen J Radachy
      */
-    public SpeechToText(Controller w) {
+    public SpeechToText(Controller w, boolean large) {
         parent = w;
         // instantiate and allocate recognizer
+        if (large){
         sttRecognizer = new STTService(this.getClass().getResource("sphinxconfig.xml"), this.getClass().getResource("sphinxtestfile.txt"), false);
+        } else {
+            sttRecognizer = new STTService(this.getClass().getResource("openclosesphinxconfig.xml"), this.getClass().getResource("openclosesphinxtestfile.txt"), false);
+        }
         sttRecognizer.allocate();
     }
 
