@@ -95,14 +95,6 @@ public class Controller {
 	 *	@author Robin McNally
 	 *	@param gPack Takes a robot packet and decides what class to send it to
 	 */
-	/*
-		TODO -> Application invalid
-		TODO -> Application commands invalid
-		TODO -> Application open fail
-		TODO -> Display to user
-		TODO -> Get Folder location
-		TODO -> Bad Get Value
-	*/
 	public void sendPacket(RobotPacket rPack){
 	}
 
@@ -122,13 +114,33 @@ public class Controller {
 	public void sendPacket(STTPacket stPack){
 		String toDecode = stPack.getText();
 		RobotPacket p = funnel.decodeVLC(toDecode);
-                if (!newui){
-                gui.sendDebugText(toDecode);
-                } else {
-                    ux.setInputText(toDecode);
-                }
-                //stt.stopRecording();
+		if (!newui){
+			gui.sendDebugText(toDecode);
+		} else {
+			ux.setInputText(toDecode);
+		}
 		if (p==null) {return;}
+		TextToSpeechPacket Disp;
 		p = robot.sendPacket(p);
+		switch (p.getEvent()){
+			case "BadPacket":
+				if (p.getInfo() == null){
+					Disp = new TextToSpeechPacket("I'm sorry we don't support a program that does that job");
+					tts.send(Disp);
+					return;
+				} else {
+					//More complex improper command to come during the second sprint
+					Disp = new TextToSpeechPacket("I didn't understand you");
+					tts.send(Disp);
+					return GUIDisplay;
+				}
+			case "FailedOpen":
+					Disp = new TextToSpeechPacket("the program did not open");
+					tts.send(Disp);
+					return GUIDisplay;
+			case "Display":
+			default:
+			break;
+		}
 	}
 }
