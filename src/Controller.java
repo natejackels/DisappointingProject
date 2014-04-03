@@ -9,6 +9,7 @@ public class Controller {
 	public GUI gui;
 	public Robot robot;
 	public Funnel funnel;
+        public Setting settings;
         // this swaps between the old and new UI implementation.
         private boolean newui = false;//true;
         private UX ux;
@@ -32,6 +33,7 @@ public class Controller {
                 }
 		robot = new Robot(this);
 		funnel = new Funnel(this);
+                settings = new Setting(this);
 	}
 
 	/**
