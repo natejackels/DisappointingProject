@@ -1,16 +1,14 @@
 #Comments can be added with a hashtag as the first character
 #Empty lines are ignored
 #Tabs are delimiters
-#command <TAB> Application <TAB> COMMAND <TAB> Arg0 <TAB> Arg1 <TAB>...
+#command,command,command <TAB> Application <TAB> COMMAND <TAB> Arg0 <TAB> Arg1 <TAB>...
+#Use * for arg if the argument should be "parsed" from the command
 
 #VLC Commands
 open	VLC	Open
-play	VLC	Play	song.mp3
+play,listen,hear	VLC	Play	*
 pause	VLC	Pause
 close	VLC	Close
 what	VLC	What
 whatis	VLC	WhatIs
 next	VLC	Next
-find	VLC	Play	song.mp3
-listen	VLC	Play	song.mp3
-hear	VLC	Play	song.mp3

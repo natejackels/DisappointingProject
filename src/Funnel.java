@@ -119,7 +119,11 @@ public class Funnel {
 						arguments[i] = exploded[i+1];
 					}
 					
-					commandMap.put(human, arguments);
+					//Parse all the commands;
+					String[] commandList = human.split(",");
+					for (String comm : commandList) {
+						commandMap.put(comm, arguments);
+					}
 				} catch (Exception e) {
 					System.out.println("Error loading command on line " + command);
 				}
@@ -180,7 +184,8 @@ public class Funnel {
 				verbs.add(word);
 			} else if (tag.equals("PRP")) {
 				prepositions.add(word);
-			} else if (tag.equals("NN")) {
+			} else if (tag.equals("NN") || tag.equals("NNS")
+					 || tag.equals("NNP")  || tag.equals("NNPS")) {
 				subjects.add(word);
 			}
 		}
@@ -239,7 +244,7 @@ public class Funnel {
 			toInterpret = toInterpret.replace("search for", "");
 			toInterpret = toInterpret.replace("search","");
 			String[] arg = new String[2];
-			arg[0] = "Wikipedia";
+			arg[0] = "Google";
 			arg[1] = toInterpret;
 			RobotPacket packet = new RobotPacket("Chrome","Search",arg);
 			return packet;
@@ -277,6 +282,12 @@ public class Funnel {
 			for (int i = 0; i < args.length; i++) {
 				args[i] = command[i+2];
 			}
+		}
+		
+		//If the arguments is "*", we need to take user input
+		if (args != null && args.length >= 1 && args[0].equals("*")) {
+			//The Replace this
+			args[0] = "song.mp3";
 		}
 		
 		if (debugMode) {
