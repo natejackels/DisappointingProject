@@ -1,12 +1,11 @@
-import java.awt.Toolkit;
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Scanner;
 import java.util.Map.Entry;
 
 import com.google.gson.JsonArray;
@@ -50,6 +49,8 @@ public class Chrome extends Application {
 			return openBookmark(e.getEvent(), e.getInfo());
 		case("Search"):
 			return search(e.getEvent(), e.getInfo());
+		case("SaveBookmark"):
+			return saveBookmark(e.getEvent(), e.getInfo());
 		default:
 			System.out.println("Invalid Command");
 			String[] info = {"Invalid Command", "Chrome"};
@@ -57,6 +58,72 @@ public class Chrome extends Application {
 		}
 	}
 
+	/**
+	 * Method: saveBookmark(String cmd, String[] args)
+	 * @author Nathan Jackels
+	 * @param cmd The command to be returned within the response packet.
+	 * @param args null or empty if edit mode, contains Force in args[0] if press enter after ctrl+d
+	 * @return A success packet if there aren't any errors, failure packet otherwise
+	 * Description: A method to help bookmark a page.
+	 */
+	private RobotPacket saveBookmark(String cmd, String[] args) {
+		if(chromeExists()){
+			this.openURL("");
+			try{
+				Thread.sleep(500); //To account for slow computers
+			} catch (Exception e){}
+			keyboard.ctrlCMD(java.awt.event.KeyEvent.VK_W);
+			try{
+				Thread.sleep(500);
+			} catch (Exception e){}
+			keyboard.ctrlCMD(java.awt.event.KeyEvent.VK_D);
+			if((args!=null) && (args.length > 0)){
+				if(args[0].equals("Force")){
+					try{
+						Thread.sleep(500);
+					} catch (Exception e){}
+					keyboard.pressEnter();
+				}
+			}
+		} else {
+			return this.failed(cmd, args);
+		}
+		return this.sucessful(cmd, args);
+	}
+
+	/**
+	 * Method: chromeExists()
+	 * @author Nathan Jackels
+	 * @return True if chrome.exe was found, False otherwise
+	 * Description: A method that checks the currently running processes and checks for chrome.exe.
+	 */
+	private boolean chromeExists(){
+		try{
+			String line;
+			Process p = Runtime.getRuntime().exec(System.getenv("windir") + "\\system32\\" + "tasklist.exe");
+			Scanner in = new Scanner(p.getInputStream());
+			while(in.hasNext()){
+				line = in.nextLine();
+				if(line.indexOf("chrome.exe") != -1){
+					in.close();
+					return true;
+				}
+			}
+			in.close();
+		} catch (Exception e){
+			return false;
+		}
+		return false;
+	}
+
+	/**
+	 * Methodname: search(String cmd, String[] args)
+	 * @author Nathan Jackels
+	 * @param cmd The command to be returned within the response packet
+	 * @param args args[0]: Search Engine args[1]: Text to be searched for
+	 * @return Returns a success packet if chrome opened successfully on good input, or a Failure Packet otherwise
+	 * Description: A method to search for a text string with some fairly common search engines
+	 */
 	private RobotPacket search(String cmd, String[] args) {
 		if(args == null){
 			return this.failed(cmd, args);
@@ -112,7 +179,14 @@ public class Chrome extends Application {
 			return this.failed(cmd, args);
 		}
 	}
-	
+
+	/**
+	 * Method: parseTerm(String term)
+	 * @author Nathan Jackels
+	 * @param term The string that needs to be parsed into the URL encoding standards
+	 * @return The correctly parsed string (with the exception of unsupported characters)
+	 * Description: A helper method that parses a string so that it meets URL encoding standards.
+	 */
 	private String parseTerm(String term){
 		String result = "";
 		String normal = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
@@ -154,7 +228,7 @@ public class Chrome extends Application {
 				case('|'): result += "%7C"; break;
 				case('}'): result += "%7D"; break;
 				case('~'): result += "%7E"; break;
-				
+
 				default:
 					System.out.println("###Character not supported:[" + t + "]###");
 				}
@@ -193,7 +267,14 @@ public class Chrome extends Application {
 		keyboard.pressEnter();
 		return this.sucessful(cmd, args);
 	}
-	
+
+	/**
+	 * Method: openURL(String url)
+	 * @author Nathan Jackels
+	 * @param url The url to be opened in chrome
+	 * @return True if thought to be successful, False otherwise
+	 * Description: A helper method that attempts to open a URL in Chrome
+	 */
 	private boolean openURL(String url){
 		ProcessBuilder pb = new ProcessBuilder("C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe", url);
 		try{
@@ -204,7 +285,15 @@ public class Chrome extends Application {
 		}
 		return true;
 	}
-	
+
+	/**
+	 * Method: openBookmark(String cmd, String[] args)
+	 * @author Nathan Jackels
+	 * @param cmd The command to be returned within the response packet
+	 * @param args args[0]: The string that is being compared with bookmark Names and URLs to try to find one to open
+	 * @return True if operation thought to have been successful, False otherwise
+	 * Description: A method that searches through the list of bookmarks, and opens the first one that matches the search term
+	 */
 	private RobotPacket openBookmark(String cmd, String[] args){
 		if(args == null){
 			return failed(cmd, args);
@@ -224,7 +313,7 @@ public class Chrome extends Application {
 				}
 			}
 		}
-		return null;
+		return failed(cmd, args);
 	}
 
 	/**
@@ -268,8 +357,13 @@ public class Chrome extends Application {
 		}
 		return new RobotPacket("Robot", "CommandFailed", infoResult);
 	}
-	
-	//TODO JavaDocs
+
+	/**
+	 * Method: Map<String, String> getBookmarks()
+	 * @author Nathan Jackels
+	 * @return A map of the bookmarks for the current user in the form <Name, URL>
+	 * Description: A helper method to retrieve all of the current users chrome bookmarks
+	 */
 	private Map<String, String> getBookmarks(){
 		String path = System.getenv("LOCALAPPDATA") + "\\Google\\Chrome\\User Data\\Default\\Bookmarks";
 		try {
@@ -287,10 +381,16 @@ public class Chrome extends Application {
 			e.printStackTrace();
 			return null;
 		}
-		
+
 	}
 
-	//TODO JavaDocs
+	/**
+	 * Method: ArrayList<JsonElement> extract(JsonArray bookmarks)
+	 * @author Nathan Jackels
+	 * @param bookmarks The reference to a folder/array of bookmarks and other folders
+	 * @return An ArrayList of JsonElements, for which each element  represents a single bookmark
+	 * Description: A recursive helper method that retrieves JsonElements which represent individual Bookmarks
+	 */
 	private ArrayList<JsonElement> extract(JsonArray bookmarks) {
 		ArrayList<JsonElement> result = new ArrayList<JsonElement>();
 		for(int i = 0; i < bookmarks.size(); i++){

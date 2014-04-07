@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="src" path="jdk1.7.0_40"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="lib" path="src/lib/cmu_time_awb.jar"/>
+	<classpathentry kind="lib" path="src/lib/cmu_us_kal.jar"/>
+	<classpathentry kind="lib" path="src/lib/cmudict04.jar"/>
+	<classpathentry kind="lib" path="src/lib/cmulex.jar"/>
+	<classpathentry kind="lib" path="src/lib/cmutimelex.jar"/>
+	<classpathentry kind="lib" path="src/lib/en_us.jar"/>
+	<classpathentry kind="lib" path="src/lib/gson-2.2.4.jar"/>
+	<classpathentry kind="lib" path="src/lib/jsapi-1.0-base.jar"/>
+	<classpathentry kind="lib" path="src/lib/marytts-client-5.0-jar-with-dependencies.jar"/>
+	<classpathentry kind="lib" path="src/lib/marytts-lang-en-5.0.jar"/>
+	<classpathentry kind="lib" path="src/lib/marytts-server-5.0-jar-with-dependencies.jar"/>
+	<classpathentry kind="lib" path="src/lib/sphinx4.jar"/>
+	<classpathentry kind="lib" path="src/lib/stanford-postagger.jar"/>
+	<classpathentry kind="lib" path="src/lib/voice-cmu-slt-hsmm-5.0.jar"/>
+	<classpathentry kind="lib" path="src/lib/WSJ_8gau_13dCep_16k_40mel_130Hz_6800Hz.jar"/>
+	<classpathentry kind="lib" path="src/lib/WSJ_8gau_13dCep_8kHz_31mel_200Hz_3500Hz.jar"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>
