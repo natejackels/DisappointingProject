@@ -29,7 +29,6 @@ public class Funnel {
 	
 	/*Stanford POS tagger
 	 * 
-
         CC Coordinating conjunction
         CD Cardinal number
         DT Determiner
@@ -164,6 +163,13 @@ public class Funnel {
 	private String convertToCommand(String raw) {
 		String tagged = tagger.tagString(raw);
 		
+		//replace search_NN with search_VB
+		tagged = tagged.replace("search_NN", "search_VB");
+		
+		//if they typed "for" after search, get rid of it
+		tagged = tagged.replace("search_VB for_IN", "search_VB");
+		raw = raw.replace("search for", "search");
+		
 		if (debugMode) {
 			System.out.println(tagged);
 		}
@@ -219,7 +225,7 @@ public class Funnel {
 				//Everything after the verb is the arguments
 				raw = raw.toLowerCase();
 				int verbindex = raw.indexOf(v)+v.length();
-				return v;// + raw.substring(verbindex);
+				return v + raw.substring(verbindex);
 			}
 		}
 		if (verbs.size() > 0) {
@@ -239,16 +245,16 @@ public class Funnel {
 			return null;
 		}
 		
-		if  (toInterpret.contains("search")) {
-			//If "for" comes after search, remove it
-			toInterpret = toInterpret.replace("search for", "");
-			toInterpret = toInterpret.replace("search","");
-			String[] arg = new String[2];
-			arg[0] = "Google";
-			arg[1] = toInterpret;
-			RobotPacket packet = new RobotPacket("Chrome","Search",arg);
-			return packet;
-		}
+//		if  (toInterpret.contains("search")) {
+//			//If "for" comes after search, remove it
+//			toInterpret = toInterpret.replace("search for", "");
+//			toInterpret = toInterpret.replace("search","");
+//			String[] arg = new String[2];
+//			arg[0] = "Google";
+//			arg[1] = toInterpret;
+//			RobotPacket packet = new RobotPacket("Chrome","Search",arg);
+//			return packet;
+//		}
 		
 		if (debugMode) {
 			System.out.println("Trying command: " + toInterpret);
@@ -258,7 +264,7 @@ public class Funnel {
 		String[] splitInterpret = toInterpret.split(" ");
 		String action = splitInterpret[0];
 		String[] arguments = new String[splitInterpret.length-1];
-		for (int i = 1; i < splitInterpret.length; i++) {
+		for (int i = 0; i < splitInterpret.length-1; i++) {
 			arguments[i] = splitInterpret[i+1];
 		}
 		
@@ -275,20 +281,32 @@ public class Funnel {
 			return null;
 		}
 		
-		//Convert this to a robot packet
+		//Combine aruments from template (funnel.sav) and what the user
+		//typed in
 		String[] args = null;
 		if (command.length > 2) {
-			args = new String[command.length-2];
-			for (int i = 0; i < args.length; i++) {
+			
+			int numArgsFromFunnelSav = command.length-2;
+			int numArgsFromInput = arguments.length;
+			
+			args = new String[numArgsFromFunnelSav];
+			for (int i = 0; i < numArgsFromFunnelSav; i++) {
 				args[i] = command[i+2];
 			}
+			
+			//If the last argument is a *, replace it with
+			//user arguments
+			if (args[args.length-1].equals("*")) {
+				String combined = "";
+				for (int i = 0; i < arguments.length; i++) {
+					combined += " " + arguments[i];
+				}
+				combined = combined.substring(1);
+				
+				args[args.length-1] = combined;
+			}
 		}
-		
-		//If the arguments is "*", we need to take user input
-		if (args != null && args.length >= 1 && args[0].equals("*")) {
-			//The Replace this
-			args[0] = "song.mp3";
-		}
+
 		
 		if (debugMode) {
 			System.out.println("Program: \"" + command[0] + "\"");
