@@ -13,3 +13,6 @@ what	VLC	What
 whatis	VLC	WhatIs
 next	VLC	Next
 search,find,browse	Chrome	Search	Google	*
+
+#What can I do
+do	VLC	What

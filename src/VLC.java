@@ -12,16 +12,18 @@ import java.util.Scanner;
  */
 
 public class VLC extends Application{
-
+	Controller parent;
+	
 	/**
 	 * Method: VLC(Robot e, Keyboard k, Mouse m)
 	 * @author Nathan Jackels
 	 * @param k The reference to the keyboard class
 	 * Description: The constructor for VLC
 	 */
-	public VLC(Keyboard k) {
+	public VLC(Keyboard k, Controller p) {
 		super("VLC");
 		this.keyboard = k;
+		this.parent = p;
 	}
 
 	/**
@@ -146,6 +148,8 @@ public class VLC extends Application{
 	 * Description: A method that contains a description of what commands the user can control VLC with.
 	 */
 	private RobotPacket what(){
+		TextToSpeechPacket packet = new TextToSpeechPacket("Think of a song then say, \"Play song.\"");
+		parent.sendPacket(packet);
 		String[] canDo = {"The Commands for VLC are" + "Play or Pause", "Play song or artist", "What songs do I have - this will list the songs in your library.", "Open VLC", "Close VLC"};
 		return new RobotPacket("Robot", "Display",canDo);
 	}

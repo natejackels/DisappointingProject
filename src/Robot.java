@@ -22,7 +22,7 @@ public class Robot {
 			this.keyboard = null;
 		}
 		apps = new Application[4];
-		apps[0] = new VLC(keyboard);
+		apps[0] = new VLC(keyboard,control);
 		apps[1] = new Computer(keyboard);
 		apps[2] = new Chrome(keyboard);
 		apps[3] = new PhotoViewer(keyboard);

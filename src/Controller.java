@@ -106,6 +106,7 @@ public class Controller {
 	 *	@param gPack Takes a tts packet and decides what class to send it to
 	 */
 	public void sendPacket(TextToSpeechPacket tsPack){
+		tts.send(tsPack);
 	}
 
 	/**

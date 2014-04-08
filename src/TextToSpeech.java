@@ -16,6 +16,7 @@ public class TextToSpeech implements Runnable{
 	private MaryInterface marytts;
 	private String toSay;
 	public boolean enabled = true;
+	private boolean talking = false;
 	
 	public TextToSpeech(Controller w){
 		parent = w;
@@ -35,6 +36,11 @@ public class TextToSpeech implements Runnable{
 		} 
 	}
 	
+	
+	public boolean isTalking() {
+		return talking;
+	}
+	
 	/**Send a packet to TTS.  The message of the packet will be spoken
 	 * 
 	 * @param packet TextToSpeechPacket with a message to be said.
@@ -51,7 +57,8 @@ public class TextToSpeech implements Runnable{
 	 */
 	private void say(String s) {
 		//Load this into the list of things to say
-		
+		System.out.println("starting speech...");
+		talking = true;
 		try {
 			AudioInputStream audio = marytts.generateAudio(s);
 			AudioPlayer player = new AudioPlayer(audio);
@@ -61,7 +68,8 @@ public class TextToSpeech implements Runnable{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+		talking = false;
+		System.out.println("done");
 	}
 	
 	@Override
