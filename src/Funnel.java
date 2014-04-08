@@ -294,6 +294,44 @@ public class Funnel {
 				args[i] = command[i+2];
 			}
 			
+			//Try to find the file for play, and make that the argument
+			if (command[1].equals("Play")) {
+				boolean foundFile = false;
+				for (String s : arguments) {
+					//Try withoug adding .mp3
+					if (debugMode) {
+						System.out.println("Searching for " + s);
+					}
+					File f = new File(s);
+					if (f.exists()) {
+						arguments = new String[] {s};
+						foundFile = true;
+						break;
+					}
+					
+					//try adding .mp3
+					if (debugMode) {
+						System.out.println("Searching for " + s + ".mp3");
+					}
+					f = new File(s + ".mp3");
+					if (f.exists()) {
+						arguments = new String[] {s + ".mp3"};
+						foundFile = true;
+						break;
+					}
+				}
+				if (!foundFile) {
+					if (debugMode) {
+						System.out.println("No files found");
+					}
+					arguments = new String[0];
+				} else {
+					if (debugMode) {
+						System.out.println("Song: " + arguments[0]);
+					}
+				}
+			}
+			
 			//If the last argument is a *, replace it with
 			//user arguments
 			if (args[args.length-1].equals("*")) {
@@ -301,7 +339,8 @@ public class Funnel {
 				for (int i = 0; i < arguments.length; i++) {
 					combined += " " + arguments[i];
 				}
-				combined = combined.substring(1);
+				if (combined.length() > 2)
+					combined = combined.substring(1);
 				
 				args[args.length-1] = combined;
 			}
