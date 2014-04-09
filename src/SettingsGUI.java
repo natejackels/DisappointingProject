@@ -47,18 +47,11 @@ public class SettingsGUI extends javax.swing.JFrame {
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("Settings");
 
-        jTextField2.setText(parent.settings.get("CHROME_PATH")
-        );
-
-        jTextField3.setText(parent.settings.get("SEARCH_ENGINE"));
         jTextField3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextField3ActionPerformed(evt);
             }
         });
-
-        jTextField4.setText(parent.settings.get("MUSIC_LIBRARY")
-        );
 
         jLabel2.setText("VLC Path");
 
@@ -67,9 +60,6 @@ public class SettingsGUI extends javax.swing.JFrame {
         jLabel4.setText("Seach Engine");
 
         jLabel5.setText("Music Library");
-
-        jTextField5.setText(parent.settings.get("VLC_PATH")
-        );
 
         jButton1.setText("Save");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -152,10 +142,7 @@ public class SettingsGUI extends javax.swing.JFrame {
     }//GEN-LAST:event_jTextField3ActionPerformed
 
     private void SaveAction(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SaveAction
-        parent.settings.put("VLC_PATH", jTextField5.getText());
-        parent.settings.put("CHROME_PATH", jTextField2.getText());
-        parent.settings.put("SEARCH_ENGINE", jTextField3.getText());
-        parent.settings.put("MUSIC_LIBRARY", jTextField4.getText());
+
         this.setVisible(false);
         this.dispose();
     }//GEN-LAST:event_SaveAction

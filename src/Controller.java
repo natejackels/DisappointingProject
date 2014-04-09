@@ -11,7 +11,7 @@ public class Controller {
 	public Funnel funnel;
         public Setting settings;
         // this swaps between the old and new UI implementation.
-        private boolean newui = false;//true;
+        private boolean newui = true;
         private UX ux;
 	
 	public static void main(String[] args) {

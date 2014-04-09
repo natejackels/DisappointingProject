@@ -18,7 +18,7 @@ import java.io.*;
     will put in handling for \ later
 */
 public class Setting {
-    private HashMap<String, String> Settings = new HashMap<>();
+    private HashMap<String, ArrayList<String>> Settings = new HashMap<>();
     public Controller parent;
     
     /**
@@ -36,7 +36,7 @@ public class Setting {
      * @param key the key of the value to be retrieved
      * @return The value at that key or null if there is no mapping
      */
-    public String get(String key){
+    public ArrayList<String> get(String key){
         return Settings.get(key);
     }
     
@@ -51,10 +51,10 @@ public class Setting {
      * @param val The value to put in the key location
      * @return the previous value or null if there was not mapping for that key
      */
-    public String put(String key, String val){
-        String returnVal = Settings.put(key, val);
+    public void put(String key, ArrayList<String> val){
+        Settings.put(key, val);
         writeSettings();
-        return returnVal;
+        return;
     }
     
     /**
@@ -88,7 +88,7 @@ public class Setting {
             InputStream buffer = new BufferedInputStream(fIn);
             ObjectInputStream in = new ObjectInputStream(buffer);
             ) {
-            Settings = (HashMap<String, String>) in.readObject();
+            Settings = (HashMap<String, ArrayList<String>>) in.readObject();
             in.close();
             buffer.close();
             fIn.close();
