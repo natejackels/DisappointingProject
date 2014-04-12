@@ -329,7 +329,7 @@ public class Chrome extends Application {
 			params = new String[0];
 		}
 		String[] infoResult = new String[2 + params.length];
-		infoResult[0] = "Computer";
+		infoResult[0] = "Chrome";
 		infoResult[1] = cmd;
 		for(int i = 0; i < params.length; i++){
 			infoResult[i+2] = params[i];
@@ -350,7 +350,7 @@ public class Chrome extends Application {
 			params = new String[0];
 		}
 		String[] infoResult = new String[2 + params.length];
-		infoResult[0] = "Computer";
+		infoResult[0] = "Chrome";
 		infoResult[1] = cmd;
 		for(int i = 0; i < params.length; i++){
 			infoResult[i+2] = params[i];
