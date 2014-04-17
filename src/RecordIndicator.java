@@ -34,7 +34,7 @@ public class RecordIndicator extends javax.swing.JPanel {
         int sh = (int) g.getFontMetrics().getStringBounds("Rec", g).getHeight();
 
         if (alt){
-            g.setColor(new Color(6684672));
+            g.setColor(new Color(6684672));   //6684672
         } else {
             g.setColor(Color.black);
         }
