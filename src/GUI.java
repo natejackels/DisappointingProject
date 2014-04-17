@@ -8,9 +8,15 @@ public class GUI extends javax.swing.JFrame {
     // removed boolean recording
     public Controller parent;
     String commandToSend = "";  //String to be passed to control after typed in
-    boolean debugMode = true;
+    boolean debugMode = true;  // Set this to false if you want to remove the debug bar
     
-
+    /** 
+     * Method: GUI(Controller W)
+     * Description: initiates the GUI. 
+     * IF you want to make the record indicator shown at startup, remove: this.recordPanel.setVisible(false);
+     * @param W Controller
+     * @author Nathaniel J Fisher
+     */
     public GUI(Controller W) {
         parent = W;
         
@@ -50,10 +56,6 @@ public class GUI extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        exitButton = new javax.swing.JButton();
-        debugBorder = new javax.swing.JPanel();
-        debugLabel = new javax.swing.JLabel();
-        debugLabelOutput = new javax.swing.JLabel();
         mainBorder = new javax.swing.JPanel();
         titleHeader = new javax.swing.JLabel();
         inputText = new javax.swing.JLabel();
@@ -66,42 +68,12 @@ public class GUI extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         saidBox = new javax.swing.JTextArea();
         settingsJB = new javax.swing.JButton();
+        exitButton = new javax.swing.JButton();
+        debugBorder = new javax.swing.JPanel();
+        debugLabel = new javax.swing.JLabel();
+        debugLabelOutput = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-
-        exitButton.setText("Exit");
-        exitButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                exitButtonActionPerformed(evt);
-            }
-        });
-
-        debugBorder.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-
-        debugLabel.setText("DEBUG: Last command sent =");
-
-        javax.swing.GroupLayout debugBorderLayout = new javax.swing.GroupLayout(debugBorder);
-        debugBorder.setLayout(debugBorderLayout);
-        debugBorderLayout.setHorizontalGroup(
-            debugBorderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(debugBorderLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(debugLabel)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(debugLabelOutput, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
-        );
-        debugBorderLayout.setVerticalGroup(
-            debugBorderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(debugBorderLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(debugBorderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(debugBorderLayout.createSequentialGroup()
-                        .addComponent(debugLabel)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(debugLabelOutput, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap())
-        );
 
         mainBorder.setBackground(new java.awt.Color(65, 199, 194));
         mainBorder.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
@@ -157,6 +129,51 @@ public class GUI extends javax.swing.JFrame {
         saidBox.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         jScrollPane1.setViewportView(saidBox);
 
+        settingsJB.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        settingsJB.setText("Settings");
+        settingsJB.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                settingsJBActionPerformed(evt);
+            }
+        });
+
+        exitButton.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        exitButton.setForeground(new java.awt.Color(204, 0, 0));
+        exitButton.setText("Exit");
+        exitButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                exitButtonActionPerformed(evt);
+            }
+        });
+
+        debugBorder.setBackground(new java.awt.Color(65, 199, 194));
+        debugBorder.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+
+        debugLabel.setText("DEBUG: Last command sent =");
+
+        javax.swing.GroupLayout debugBorderLayout = new javax.swing.GroupLayout(debugBorder);
+        debugBorder.setLayout(debugBorderLayout);
+        debugBorderLayout.setHorizontalGroup(
+            debugBorderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(debugBorderLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(debugLabel)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(debugLabelOutput, javax.swing.GroupLayout.PREFERRED_SIZE, 477, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(32, Short.MAX_VALUE))
+        );
+        debugBorderLayout.setVerticalGroup(
+            debugBorderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(debugBorderLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(debugBorderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, debugBorderLayout.createSequentialGroup()
+                        .addComponent(debugLabel)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(debugLabelOutput, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
+        );
+
         javax.swing.GroupLayout mainBorderLayout = new javax.swing.GroupLayout(mainBorder);
         mainBorder.setLayout(mainBorderLayout);
         mainBorderLayout.setHorizontalGroup(
@@ -186,6 +203,14 @@ public class GUI extends javax.swing.JFrame {
                         .addGap(483, 483, 483)
                         .addComponent(recordToggleButton, javax.swing.GroupLayout.PREFERRED_SIZE, 252, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(mainBorderLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(settingsJB, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(debugBorder, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(223, 223, 223)
+                .addComponent(exitButton, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
         mainBorderLayout.setVerticalGroup(
             mainBorderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -203,49 +228,48 @@ public class GUI extends javax.swing.JFrame {
                     .addComponent(recordPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addComponent(recordToggleButton, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(47, Short.MAX_VALUE))
+                .addGroup(mainBorderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(mainBorderLayout.createSequentialGroup()
+                        .addComponent(recordToggleButton, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 17, Short.MAX_VALUE)
+                        .addComponent(debugBorder, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, mainBorderLayout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addGroup(mainBorderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(settingsJB)
+                            .addComponent(exitButton))
+                        .addContainerGap())))
         );
-
-        settingsJB.setText("Settings");
-        settingsJB.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                settingsJBActionPerformed(evt);
-            }
-        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(debugBorder, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(mainBorder, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(settingsJB)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(exitButton)
-                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(mainBorder, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(exitButton)
-                    .addComponent(settingsJB))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(debugBorder, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addComponent(mainBorder, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
+    /** 
+     * Method: commandFieldActionPerformed(java.awt.event.ActionEvent evt)
+     * Description: Sends the command when enter is pressed by force clicking the button
+     * @param java.awt.event.ActionEvent evt
+     * @author Nathaniel J Fisher
+     */
     private void commandFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_commandFieldActionPerformed
         sendButton.doClick();
     }//GEN-LAST:event_commandFieldActionPerformed
-
+     /** 
+     * Method: sendButtonActionPerformed(java.awt.event.ActionEvent evt)
+     * Description: Sends the current command to the debug display, the output box, and resets the commandField.
+     * Sends the command to control using GUIPacket
+     * @param java.awt.event.ActionEvent evt
+     * @author Nathaniel J Fisher
+     */
     private void sendButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sendButtonActionPerformed
         commandToSend = commandField.getText();
         debugLabelOutput.setText(commandToSend);
@@ -259,10 +283,15 @@ public class GUI extends javax.swing.JFrame {
          recordToggleButton.doClick();
          debugLabelOutput.setText("Command sent while still recording");
          }*/
-
-        //TODO send commandToSend to control
     }//GEN-LAST:event_sendButtonActionPerformed
-
+       /** 
+     * Method: recordToggleButtonActionPerformed(java.awt.event.ActionEvent evt)
+     * Description: Toggles if the program is currently listening for input or not. Its state
+     * is output to the debug output box. 
+     * Also in charge of making the record indicator visible.
+     * @param java.awt.event.ActionEvent evt
+     * @author Nathaniel J Fisher
+     */
     private void recordToggleButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_recordToggleButtonActionPerformed
         // EDIT 3/1/14 by Stephen J Radachy
         // added recording functionality and replaced boolean "recording" with an internal speech to text version
@@ -283,14 +312,26 @@ public class GUI extends javax.swing.JFrame {
             }
         }
     }//GEN-LAST:event_recordToggleButtonActionPerformed
-    //EXIT PROGRAM
+      /** 
+     * Method: exitButtonActionPerformed(java.awt.event.ActionEvent evt)
+     * Description: Exits the program when the exit button is pushed. 
+     * Also terminates STT.
+     * @param java.awt.event.ActionEvent evt
+     * @author Nathaniel J Fisher
+     */
     private void exitButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitButtonActionPerformed
         // EDIT 3/1/14 by Stephen J Radachy
         // terminate Speech to text properly
         parent.stt.terminate();
         System.exit(0);
     }//GEN-LAST:event_exitButtonActionPerformed
-
+   /** 
+     * Method: settingsJBActionPerformed(java.awt.event.ActionEvent evt)
+     * Description:Sends the string "Settings" to control to launch the settings
+     * menu and options. 
+     * @param java.awt.event.ActionEvent evt
+     * @author Nathaniel J Fisher
+     */
     private void settingsJBActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_settingsJBActionPerformed
         parent.sendPacket(new GUIPacket("settings"));
     }//GEN-LAST:event_settingsJBActionPerformed
