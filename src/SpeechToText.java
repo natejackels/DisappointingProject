@@ -201,7 +201,8 @@ public class SpeechToText {
             try {
                 if (!allocated) {
                     // creates sphinx configuration
-                    URL url = new File(configName).toURI().toURL();
+                    URL url = new File(configName).getAbsoluteFile().toURI().toURL();
+                    
                     cm = new ConfigurationManager(url);
 
                     // internal stuff
@@ -361,7 +362,7 @@ public class SpeechToText {
             try {
                 this.testFile = testFile;
                 referenceList = new ArrayList<>();
-                BufferedReader reader = new BufferedReader(new FileReader(testFile));
+                BufferedReader reader = new BufferedReader(new FileReader(new File(testFile).getAbsoluteFile()));
                 String line = null;
                 while ((line = reader.readLine()) != null) {
                     referenceList.add(line);
@@ -416,9 +417,9 @@ public class SpeechToText {
                     
                     recognizer.recognize(sttRecognizer.getNextReference());
                 } catch (IllegalStateException e) {
-                    for (StackTraceElement stackTrace : e.getStackTrace()) {
+                    /*for (StackTraceElement stackTrace : e.getStackTrace()) {
                         System.out.println(stackTrace);
-                    }
+                    }*/
                 }
             }
 
