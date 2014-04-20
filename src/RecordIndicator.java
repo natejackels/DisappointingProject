@@ -6,6 +6,7 @@
 
 
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics;
 
 /**
@@ -40,7 +41,10 @@ public class RecordIndicator extends javax.swing.JPanel {
         }
         g.fillOval(1, 1, w-2, h-2);
         g.setColor(Color.white);
-        g.drawString("Listening", w/2 - sw/2, h/2 + sh/4 + sh/20);
+        Font myFont = new Font("Tahoma", Font.BOLD, 22);
+        g.setFont(myFont);
+        g.drawString("Listening", w/2 - sw, h/2 + sh/4 + sh/20);
+        
     }
     
     class DrawThread extends Thread {
