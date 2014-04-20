@@ -30,8 +30,8 @@ public class RecordIndicator extends javax.swing.JPanel {
         int w = getWidth();
         super.paintComponent(g);
         
-        int sw = (int) g.getFontMetrics().getStringBounds("Rec", g).getWidth();
-        int sh = (int) g.getFontMetrics().getStringBounds("Rec", g).getHeight();
+        int sw = (int) g.getFontMetrics().getStringBounds("Listening", g).getWidth();
+        int sh = (int) g.getFontMetrics().getStringBounds("Listening", g).getHeight();
 
         if (alt){
             g.setColor(new Color(6684672));   //6684672
@@ -40,7 +40,7 @@ public class RecordIndicator extends javax.swing.JPanel {
         }
         g.fillOval(1, 1, w-2, h-2);
         g.setColor(Color.white);
-        g.drawString("Rec", w/2 - sw/2, h/2 + sh/4 + sh/20);
+        g.drawString("Listening", w/2 - sw/2, h/2 + sh/4 + sh/20);
     }
     
     class DrawThread extends Thread {

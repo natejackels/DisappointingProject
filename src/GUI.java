@@ -1,3 +1,6 @@
+
+import javax.swing.ImageIcon;
+
 /**
  *
  * @author njfisher
@@ -8,7 +11,7 @@ public class GUI extends javax.swing.JFrame {
     // removed boolean recording
     public Controller parent;
     String commandToSend = "";  //String to be passed to control after typed in
-    boolean debugMode = true;  // Set this to false if you want to remove the debug bar
+    boolean debugMode = false;  // Set this to false if you want to remove the debug bar
     
     /** 
      * Method: GUI(Controller W)
@@ -20,9 +23,11 @@ public class GUI extends javax.swing.JFrame {
     public GUI(Controller W) {
         parent = W;
         
+        
         initComponents();
         this.recordPanel.setVisible(false);
         this.setVisible(true);
+        this.setTitle("Empower - TD");
          if (debugMode == false){
              debugBorder.setVisible(false);
              debugLabel.setVisible(false);
@@ -57,7 +62,6 @@ public class GUI extends javax.swing.JFrame {
     private void initComponents() {
 
         mainBorder = new javax.swing.JPanel();
-        titleHeader = new javax.swing.JLabel();
         inputText = new javax.swing.JLabel();
         commandField = new javax.swing.JTextField();
         sendButton = new javax.swing.JButton();
@@ -72,17 +76,17 @@ public class GUI extends javax.swing.JFrame {
         debugBorder = new javax.swing.JPanel();
         debugLabel = new javax.swing.JLabel();
         debugLabelOutput = new javax.swing.JLabel();
+        headerPanel = new javax.swing.JPanel();
+        titleHeader = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         mainBorder.setBackground(new java.awt.Color(65, 199, 194));
         mainBorder.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-
-        titleHeader.setFont(new java.awt.Font("Microsoft PhagsPa", 1, 36)); // NOI18N
-        titleHeader.setText("Empower");
+        mainBorder.setToolTipText("");
 
         inputText.setFont(new java.awt.Font("Tahoma", 0, 36)); // NOI18N
-        inputText.setText("Input Command:");
+        inputText.setText("Type Command:");
 
         commandField.setFont(new java.awt.Font("Tahoma", 0, 36)); // NOI18N
         commandField.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
@@ -100,8 +104,8 @@ public class GUI extends javax.swing.JFrame {
             }
         });
 
-        recordToggleButton.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
-        recordToggleButton.setText("Start Recording");
+        recordToggleButton.setFont(new java.awt.Font("Tahoma", 0, 30)); // NOI18N
+        recordToggleButton.setText("Start Listening");
         recordToggleButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 recordToggleButtonActionPerformed(evt);
@@ -112,11 +116,11 @@ public class GUI extends javax.swing.JFrame {
         recordPanel.setLayout(recordPanelLayout);
         recordPanelLayout.setHorizontalGroup(
             recordPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 146, Short.MAX_VALUE)
+            .addGap(0, 169, Short.MAX_VALUE)
         );
         recordPanelLayout.setVerticalGroup(
             recordPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 146, Short.MAX_VALUE)
+            .addGap(0, 0, Short.MAX_VALUE)
         );
 
         youSaid.setFont(new java.awt.Font("Tahoma", 0, 36)); // NOI18N
@@ -174,6 +178,30 @@ public class GUI extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
+        headerPanel.setBackground(new java.awt.Color(65, 199, 194));
+        headerPanel.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        headerPanel.setForeground(new java.awt.Color(65, 199, 194));
+
+        titleHeader.setFont(new java.awt.Font("Myriad Pro", 1, 48)); // NOI18N
+        titleHeader.setText("Empower");
+
+        javax.swing.GroupLayout headerPanelLayout = new javax.swing.GroupLayout(headerPanel);
+        headerPanel.setLayout(headerPanelLayout);
+        headerPanelLayout.setHorizontalGroup(
+            headerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(headerPanelLayout.createSequentialGroup()
+                .addGap(500, 500, 500)
+                .addComponent(titleHeader)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        headerPanelLayout.setVerticalGroup(
+            headerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, headerPanelLayout.createSequentialGroup()
+                .addContainerGap(22, Short.MAX_VALUE)
+                .addComponent(titleHeader)
+                .addContainerGap())
+        );
+
         javax.swing.GroupLayout mainBorderLayout = new javax.swing.GroupLayout(mainBorder);
         mainBorder.setLayout(mainBorderLayout);
         mainBorderLayout.setHorizontalGroup(
@@ -187,51 +215,47 @@ public class GUI extends javax.swing.JFrame {
                 .addGroup(mainBorderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(mainBorderLayout.createSequentialGroup()
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 698, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 38, Short.MAX_VALUE)
-                        .addComponent(recordPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addComponent(recordPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(mainBorderLayout.createSequentialGroup()
                         .addComponent(commandField)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(sendButton, javax.swing.GroupLayout.PREFERRED_SIZE, 327, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(42, 42, 42))
             .addGroup(mainBorderLayout.createSequentialGroup()
-                .addGroup(mainBorderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(mainBorderLayout.createSequentialGroup()
-                        .addGap(521, 521, 521)
-                        .addComponent(titleHeader, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(mainBorderLayout.createSequentialGroup()
-                        .addGap(483, 483, 483)
-                        .addComponent(recordToggleButton, javax.swing.GroupLayout.PREFERRED_SIZE, 252, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(483, 483, 483)
+                .addComponent(recordToggleButton, javax.swing.GroupLayout.PREFERRED_SIZE, 252, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(mainBorderLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(settingsJB, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 91, Short.MAX_VALUE)
                 .addComponent(debugBorder, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(223, 223, 223)
                 .addComponent(exitButton, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
+            .addComponent(headerPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         mainBorderLayout.setVerticalGroup(
             mainBorderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, mainBorderLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(titleHeader, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(headerPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(mainBorderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(inputText)
                     .addComponent(commandField, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(sendButton))
                 .addGap(18, 18, 18)
-                .addGroup(mainBorderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(mainBorderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(recordPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(youSaid)
-                    .addComponent(recordPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jScrollPane1))
                 .addGap(18, 18, 18)
                 .addGroup(mainBorderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(mainBorderLayout.createSequentialGroup()
                         .addComponent(recordToggleButton, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 17, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(debugBorder, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, mainBorderLayout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
@@ -298,7 +322,7 @@ public class GUI extends javax.swing.JFrame {
         if (!parent.stt.isRecording()) {
             
             if (parent.stt.startRecording()){
-                recordToggleButton.setText("Stop Recording");
+                recordToggleButton.setText("Stop Listening");
                 debugLabelOutput.setText("Recording Started");
                 this.recordPanel.setVisible(true);
             }
@@ -306,8 +330,8 @@ public class GUI extends javax.swing.JFrame {
 
             parent.stt.stopRecording();
             if (!parent.stt.isRecording()){
-                recordToggleButton.setText("Start Recording");
-                debugLabelOutput.setText("Recording Ended");
+                recordToggleButton.setText("Start Listening");
+                debugLabelOutput.setText("Listening Ended");
                 this.recordPanel.setVisible(false);
             }
         }
@@ -342,6 +366,7 @@ public class GUI extends javax.swing.JFrame {
     private javax.swing.JLabel debugLabel;
     private javax.swing.JLabel debugLabelOutput;
     private javax.swing.JButton exitButton;
+    private javax.swing.JPanel headerPanel;
     private javax.swing.JLabel inputText;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JPanel mainBorder;
