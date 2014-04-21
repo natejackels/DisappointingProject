@@ -17,7 +17,6 @@ public class SettingsGUI extends javax.swing.JFrame {
     public SettingsGUI(Controller w) {
         parent = w;
         initComponents();
-        this.setVisible(true);
     }
 
     /**
