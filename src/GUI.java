@@ -12,7 +12,7 @@ public class GUI extends javax.swing.JFrame {
     public Controller parent;
     String commandToSend = "";  //String to be passed to control after typed in
     boolean debugMode = false;  // Set this to false if you want to remove the debug bar
-    SettingsGUI settings = new SettingsGUI(parent);
+    SettingsGUI settings;
     /** 
      * Method: GUI(Controller W)
      * Description: initiates the GUI. 
@@ -22,11 +22,11 @@ public class GUI extends javax.swing.JFrame {
      */
     public GUI(Controller W) {
         parent = W;
-  
+        settings = new SettingsGUI(parent);
         settings.setVisible(false);
         
         initComponents();
-        this.settingsJB.setVisible(false);
+        this.settingsJB.setVisible(true);
         this.recordPanel.setVisible(false);
         this.setVisible(true);
         this.setTitle("Empower - TD");

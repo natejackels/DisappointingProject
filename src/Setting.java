@@ -29,6 +29,25 @@ public class Setting {
     public Setting(Controller w) {
         parent = w;
         readSettings();
+        ArrayList<String> temp = new ArrayList<>();
+        temp.add("Temp");
+        if (Settings.get("VLC_PATH") == null){
+            Settings.put("VLC_PATH", temp);
+        } else if (Settings.get("CHROME_PATH") == null){
+            Settings.put("CHROME_PATH", temp);
+        } else if (Settings.get("SEARCH_ENGINE") == null){
+            ArrayList<String> Engines = new ArrayList<>();
+            Engines.add("Chrome");
+            Engines.add("Bing");
+            Engines.add("Yahoo");
+            Settings.put("SEARCH_ENGINE", Engines);
+        } else if (Settings.get("SEARCH_ENGINES") == null){
+            ArrayList<String> num = new ArrayList<>();
+            num.add("0");
+            Settings.put("SEARCH_ENGINES", temp);
+        } else if (Settings.get("MUSIC_LIBRARY") == null){
+            Settings.put("MUSIC_LIBRARY", temp);
+        }
     }
     
     /**
