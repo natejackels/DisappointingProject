@@ -53,7 +53,9 @@ public class Keyboard {
 	 */
 	public void releaseKeys(){
 		for(Integer e : pressedKeys){
-			keyboard.keyRelease(e);
+			try{
+				keyboard.keyRelease(e);
+			} catch (Exception ignore){}
 			pressedKeys.remove(e);
 		}
 	}

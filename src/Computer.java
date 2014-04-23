@@ -107,5 +107,4 @@ public class Computer extends Application {
 		}
 		return new RobotPacket("Robot", "CommandFailed", infoResult);
 	}
-
 }

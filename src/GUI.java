@@ -24,7 +24,9 @@ public class GUI extends javax.swing.JFrame {
         parent = W;
   
         settings.setVisible(false);
+        
         initComponents();
+        this.settingsJB.setVisible(false);
         this.recordPanel.setVisible(false);
         this.setVisible(true);
         this.setTitle("Empower - TD");

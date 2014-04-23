@@ -23,6 +23,7 @@ public class Controller {
 	}
 	
 	public void initialize() {
+		settings = new Setting(this);
 		tts = new TextToSpeech(this);
 		stt = new SpeechToText(this,true);
 		if (!newui){
@@ -33,7 +34,7 @@ public class Controller {
                 }
 		robot = new Robot(this);
 		funnel = new Funnel(this);
-                settings = new Setting(this);
+                
 	}
 
 	/**

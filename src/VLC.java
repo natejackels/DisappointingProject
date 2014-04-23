@@ -310,7 +310,7 @@ public class VLC extends Application{
 	 */
 	private RobotPacket next(String cmd, String[] params){
 		try {
-			Runtime.getRuntime().exec("cmd.exe /C start ./RobotScripts/next.vbs");
+			Runtime.getRuntime().exec("cmd.exe /C start ./src/RobotScripts/next.vbs");
 			return sucessful(cmd, params);
 		} catch (IOException e) {
 			return failed(cmd, params);
@@ -327,7 +327,7 @@ public class VLC extends Application{
 	 */
 	private RobotPacket prev(String cmd, String[] params){
 		try {
-			Runtime.getRuntime().exec("cmd.exe /C start ./RobotScripts/prev.vbs");
+			Runtime.getRuntime().exec("cmd.exe /C start ./src/RobotScripts/prev.vbs");
 			return sucessful(cmd, params);
 		} catch (IOException e) {
 			return failed(cmd, params);
@@ -344,7 +344,7 @@ public class VLC extends Application{
 	 */
 	private RobotPacket stop(String cmd, String[] params){
 		try {
-			Runtime.getRuntime().exec("cmd.exe /C start ./RobotScripts/stop.vbs");
+			Runtime.getRuntime().exec("cmd.exe /C start ./src/RobotScripts/stop.vbs");
 			return sucessful(cmd, params);
 		} catch (IOException e) {
 			return failed(cmd, params);
@@ -431,7 +431,7 @@ public class VLC extends Application{
 		}
 		HashMap<String, String> result = new HashMap<String, String>();
 		try{
-			ProcessBuilder decode = new ProcessBuilder("./RobotScripts/MediaMetaData/ffmpeg.exe", "-i", song.getAbsolutePath(), "-f", "ffmetadata", "out");
+			ProcessBuilder decode = new ProcessBuilder("./src/RobotScripts/MediaMetaData/ffmpeg.exe", "-i", song.getAbsolutePath(), "-f", "ffmetadata", "out");
 			Process d = decode.start();
 			d.waitFor();
 			File data = new File("out");

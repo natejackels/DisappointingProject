@@ -1,15 +1,20 @@
 import java.awt.event.InputEvent;
 import java.io.IOException;
+
 import com.sun.jna.Native;
 import com.sun.jna.Pointer;
 import com.sun.jna.platform.win32.Kernel32;
-import com.sun.jna.platform.win32.WinUser;
+import com.sun.jna.platform.win32.Tlhelp32;
+import com.sun.jna.platform.win32.WinDef;
 import com.sun.jna.platform.win32.WinDef.HWND;
 import com.sun.jna.platform.win32.WinDef.RECT;
+import com.sun.jna.platform.win32.WinNT;
 import com.sun.jna.platform.win32.WinNT.HANDLE;
+import com.sun.jna.platform.win32.WinUser;
 import com.sun.jna.platform.win32.WinUser.WNDENUMPROC;
 import com.sun.jna.ptr.IntByReference;
 import com.sun.jna.win32.StdCallLibrary;
+import com.sun.jna.win32.W32APIOptions;
 
 /**
  * Class: PhotoViewer
@@ -156,10 +161,12 @@ public class PhotoViewer extends Application{
 	 * @return A success packet if photo is found and opened, a failure packet otherwise.
 	 */
 	private RobotPacket slideShow(String cmd, String[] args) {
+		System.out.println("Slideshow");
 		if(wpv() != null){
 			keyboard.releaseKeys();
 			keyboard.press(java.awt.event.KeyEvent.VK_F11);
-			keyboard.releaseKeys();
+			keyboard.keyboard.keyRelease(java.awt.event.KeyEvent.VK_F11);
+			//keyboard.releaseKeys();
 			return this.sucessful(cmd, args);
 		} else {
 			return this.failed(cmd, args);
@@ -218,7 +225,8 @@ public class PhotoViewer extends Application{
 	 * @return null if not Windows Photo Viewer instance, RECT representing window size if instance is found. 
 	 */
 	public RECT wpv(){
-		return this.existsSetForground("system32\\dllhost.exe", " - Windows Photo Viewer");
+		System.out.println("wpv()");
+		return this.existsSetForground("system32\\dllhost.exe", "Windows Photo Viewer");
 	}
 	
 	/**
@@ -307,35 +315,45 @@ public class PhotoViewer extends Application{
 			public boolean callback(HWND hWnd, Pointer arg1) {
 				//Save runtime
 				byte[] buff = new byte[512];
-				user32.getWindowA(hWnd, buff, 512);
+				user32.GetWindowTextA(hWnd, buff, 512);
 				String wText = Native.toString(buff);
 				if(wText.isEmpty()){
 					return true;
 				}
-				
+				System.out.println("wT:" + wText);
 				//Get EXE:
 				IntByReference pid = new IntByReference();
 				com.sun.jna.platform.win32.User32.INSTANCE.GetWindowThreadProcessId(hWnd, pid);
 				HANDLE process = Kernel32.INSTANCE.OpenProcess(0x0400 | 0x0010, false, pid.getValue()); //How does this work?
 				psapi.GetModuleFileNameExA(process, null, buff, 512);
 				String winExe = Native.toString(buff);
-				if(winExe.contains(exe)){ //Get Title:
+				//if(winExe.contains(exe)){ //Get Title:
 					//Get Title:
 					int titleLength = com.sun.jna.platform.win32.User32.INSTANCE.GetWindowTextLength(hWnd) + 1;
-					char[] tBuff = new char[titleLength];
-					com.sun.jna.platform.win32.User32.INSTANCE.GetWindowText(hWnd, tBuff, titleLength);
-					String wTitle = Native.toString(tBuff);
+					//char[] tBuff = new char[titleLength];
+					//com.sun.jna.platform.win32.User32.INSTANCE.GetWindowText(hWnd, tBuff, titleLength);
+					//String wTitle = Native.toString(tBuff);
+					String wTitle = wText;
+					System.out.println("exe: " + wTitle);
 					if(wTitle.contains(title)){
+						System.out.println("Set Foreground:" + wTitle);
 						//Get Dimensions:
 						com.sun.jna.platform.win32.User32.INSTANCE.SetForegroundWindow(hWnd);
 						temp = new RECT();
 						com.sun.jna.platform.win32.User32.INSTANCE.GetWindowRect(hWnd, temp);
 					}
-				}
+				//}
 				return true;
 			}
 		}, null);
 		return temp; //MAY BE NULL!
+	}
+	
+	private static String windowTitle(HWND hwnd){
+		int titleLength = (com.sun.jna.platform.win32.User32.INSTANCE).GetWindowTextLength(hwnd) + 1;
+		char[] title = new char[titleLength];
+		(com.sun.jna.platform.win32.User32.INSTANCE).GetWindowText(hwnd, title, titleLength);
+		return Native.toString(title);
 	}
 	
 	/**
@@ -346,7 +364,7 @@ public class PhotoViewer extends Application{
 	private interface User32 extends StdCallLibrary {
 		User32 INSTANCE = (User32) Native.loadLibrary("user32", User32.class);
 		boolean EnumWindows(WinUser.WNDENUMPROC lpEnumFunc, Pointer arg);
-		int getWindowA(HWND hWnd, byte[] lpString, int nMaxCount);
+		int GetWindowTextA(HWND hWnd, byte[] lpString, int nMaxCount);
 	}
 	
 	/**

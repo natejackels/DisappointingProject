@@ -9,10 +9,22 @@ open	VLC	Open
 play,listen,hear	VLC	Play	*
 pause	VLC	Pause
 close	VLC	Close
+stop	VLC	Close
 what	VLC	What
 whatis	VLC	WhatIs
 next	VLC	Next
+
+#Chrome Commands
 search,find,browse	Chrome	Search	Google	*
+save	Chrome	SaveBookmark
+history	Chrome	History	*
+
+#Photoviewer Commands
+slideshow	PhotoViewer	Slideshow
+close slideshow	Photoviewer	EndShow
+next photo	Photoviewer	Next
+previous photo	Photoviewer	Prev
+
 
 #What can I do
 do	VLC	What

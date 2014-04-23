@@ -186,7 +186,7 @@ public class Funnel {
 			String[] parts = s.split("_");
 			String tag = parts[parts.length-1].toUpperCase();
 			String word = parts[0];
-			if (tag.equals("VB")) {
+			if (tag.equals("VB") || tag.equals("RB")) {
 				verbs.add(word);
 			} else if (tag.equals("PRP")) {
 				prepositions.add(word);
@@ -226,6 +226,16 @@ public class Funnel {
 				raw = raw.toLowerCase();
 				int verbindex = raw.indexOf(v)+v.length();
 				return v + raw.substring(verbindex);
+			}
+		}
+		
+		/*At this point, if it didn't find anything, search for ANY keyword that is a command*/
+		for (String v : raw.toLowerCase().split(" ")) {
+			if (debugMode) {
+				System.out.println("Attempting verbless command: " + v);
+			}
+			if (commandMap.get(v)!=null) {
+				return v;
 			}
 		}
 		if (verbs.size() > 0) {
